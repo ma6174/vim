@@ -5,7 +5,7 @@ exec 'normal "+gP'
 exec "w! /tmp/input_data"
 endfunc
 
-let g:pydiction_location = '/home/ma6174/complete-dict'
+let g:pydiction_location = '~/.vim/after/complete-dict'
 let g:pydiction_menu_height = 20
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 let g:miniBufExplMapWindowNavVim = 1
