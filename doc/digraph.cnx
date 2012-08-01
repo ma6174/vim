@@ -1,0 +1,328 @@
+*digraph.txt*   For Vim version 7.3.  最近更新: 2008年8月
+
+
+		  VIM 参考手册    by Bram Moolenaar
+				译者: Willis
+				http://vimcdoc.sf.net
+
+
+二合字母					*digraph* *digraphs* *Digraphs*
+
+二合字母用来输入不能用普通键盘输入的字符。它们通常是可显示的非 ASCII 字符。二
+合字母比用 CTRL-V 输入十进制编码更方便记忆 (见 |i_CTRL-V|)。
+
+用户手册 |24.9| 有二合字母的简短介绍。一个替代方案是用 'keymap' 选项。
+
+1. 定义二合字母		|digraphs-define|
+2. 使用二合字母		|digraphs-use|
+3. 缺省的二合字母	|digraphs-default|
+
+{Vi 没有这些命令}
+
+==============================================================================
+1. 定义二合字母						*digraphs-define*
+
+						*:dig* *:digraphs*
+:dig[raphs]		显示当前定义的二合字母。
+							*E104* *E39*
+:dig[raphs] {char1}{char2} {number} ...
+			把二合字母 {char1}{char2} 加入列表。{number} 是字符的
+			十进制表示形式。例如: >
+	:digr e: 235 a: 228
+<			避免定义 '_' (下划线) 开头的二合字母，将来它会有特殊的
+			含义。
+
+Vim 通常编译时带有 |+digraphs| 特性。如果没有，":digraph" 命令会显示错误信息。
+
+":digraphs" 输出的例子: >
+ TH Þ  222  ss ß  223  a! à  224  a' á  225  a> â  226  a? ã  227  a: ä  228
+
+每列 (译者注: "TH Þ  222" 称为一列) 前两个字符是你用来输入二合字母的两个字符。
+
+每列的中间是产生的字符。如果你用不支持二合字母的系统察看或者打印，它们可能是乱
+码。
+
+							*digraph-encoding*
+通常，十进制表示形式是字符的 Unicode 数值。注意 'encoding' 改变的时候该数值并
+不改变。如果需要，字符从 Unicode 转换为 'encoding'。这需要该转换确实能实现，有
+时并非如此。NUL 字符会显示为 "10"，这是因为 NUL 字符内部用 NL 字符表示。写回文
+件时它会还原为 NUL 字符的。
+
+如果 Vim 编译时没有 |+multi_byte| 特性，你需要指定该字符在 'encoding' 里的编
+码。可以这样使用: >
+
+	if has("multi_byte")
+		digraph oe 339
+	elseif &encoding == "iso-8859-15"
+		digraph oe 189
+	endif
+
+这样，"oe" 二合字母在 Unicode 里使用数值 339，而在 latin9 (iso-8859-15) 里使用
+数值 189。
+
+==============================================================================
+2. 使用二合字母						*digraphs-use*
+
+有两个方法输入二合字母:					*i_digraph*
+	CTRL-K {char1} {char2}		或
+	{char1} <BS> {char2}
+第一个方法总是可以用的；第二个方法只有在 'digraph' 选项置位的时候才可用。
+
+如果二合字母 {char1}{char2} 不存在，Vim 会搜索二合字母 {char2}{char1}。这样，
+即使你不记得何者在前，也能输入。
+
+注意 如果输入 CTRL-K {char1} 时，{char1} 是特殊键，Vim 只会输入该键的编码。这
+就不是输入二合字母了。
+
+一旦你输入了二合字母，Vim 把该字符当成占据文件和屏幕的一个正常字符。示例: >
+	'B' <BS> 'B'	会输入中间断开的 '|' 字符 (166)
+	'a' <BS> '>'	会输入带 circumflex 重音的 'a' (226)
+	CTRL-K '-' '-'  会输入软的破折号 (173)
+
+":digraphs" 列出当前的二合字母。一些缺省的二合字母列在下面的 |digraph-table|
+里。
+
+对 CTRL-K 而言，有一个通用的二合字母: CTRL-K <Space> {char} 会输入 {char}，并
+设置最高位。你可以用这个方法来输入带 meta 的字符。
+
+二合字母里不能有 <Esc> 字符。按 <Esc> 的时候，Vim 停止二合字母的输入并回到插入
+或命令行模式，这也可以理解为 <Esc> 退出了二合字母的上下文。用 CTRL-V 155 输入
+meta-ESC (CSI)。
+
+如果你本来想输入 'e' 但不小心输入了 'a'，你也许会键入 'a' <BS> 'e'。但是这个序
+列成了二合字母。这也许不是你想要的。要纠正这个错误，你需要再按一次 <BS> e。要
+避免这一点，不要置位 'digraph' 选项，只用 CTRL-K 输入二合字母。
+
+Vim 里使用值高于 128 的字符可能会有问题。例如: 你输入 ue (u-umlaut) 而编辑器在
+插入模式回显 \334。离开插入模式一切就正常了。注意 fmt 删除待排版的文本里所有值
+高于 128 的字符。有的 Unix 系统上，解决方法是定义 LC_CTYPE。如果你使用 csh，把
+这行放入 .cshrc: >
+	setenv LC_CTYPE iso_8859_1
+
+==============================================================================
+3. 缺省的二合字母					*digraphs-default*
+
+Vim 缺省提供了一些二合字母。":digraphs" 的输出列出这些二合字母。
+
+Vim 在大多数系统中使用相同二合字母。它们适用于 Unicode 和 ISO-8859-1 字符集。
+缺省的二合字母是 RFC1345 提供的助记符。为了方便记住这些助记符，第二个字符有一
+个标准的含义:
+
+	字符名			字符	含义 ~
+	Exclamation mark	!	Grave (钝音符号)
+	Apostrophe		'	Acute (锐音符号)
+	Greater-Than sign	>	Circumflex (折音/抑扬符号)
+	Question Mark		?	Tilde (腭化/鼻音化符号)
+	Hyphen-Minus		-	Macron (长音符号)
+	Left parenthesis	(	Breve (短音符号)
+	Full Stop		.	上带点 (Dot)
+	Colon			:	Diaeresis (分音符号)
+	Comma			,	Cedilla (软音符号)
+	Underline		_	带下划线 (Underline)
+	Solidus			/	带短划线 (Stroke)
+	Quotation mark		"	Double acute (双锐音符号)
+	Semicolon		;	Ogonek (鼻音化符号)
+	Less-Than sign		<	Caron (楔形/倒折音符号)
+	Zero			0	上带圆圈 (Ring)
+	Two			2	上带钩 (Hook)
+	Nine			9	带角 (Horn)
+
+	Equals			=	西里尔字母 (Cyrillic)
+	Asterisk		*	希腊语
+	Percent sign		%	特殊的希腊/西里尔字母
+	Plus			+	小写: 阿拉伯语，大写: 希伯来语
+	Three			3	一些拉丁/希腊/西里尔字母
+	Four			4	注音符号
+	Five			5	平假名
+	Six			6	片假名
+
+示例: a: 是 ä 而 o: 是 ö
+
+下面列出 RFC1345 定义的单字节二合字母。其他的二合字母见 ":digraphs"。高于 255 
+的字符只有在 Vim 编译的时候加上 |+multi_byte| 特性才能使用。
+
+EURO
+
+特例: RFC1345 没有指定欧元 (euro) 符号。Vim 里为此目的加入了二合字母 =e。注意
+以下区别: latin1 里，二合字母 Cu 用于货币符号，而 latin9 (iso-8859-15) 里二合
+字母 =e 用于欧元符号，尽管两者都代表字符 164，0xa4。为了和 zsh 兼容，Eu 也用于
+欧元符号。
+
+							*digraph-table*
+字符  二合字母	十六进	十进制	正式名字 ~
+^@	NU	0x00	  0	NULL (NUL)
+^A	SH	0x01	  1	START OF HEADING (SOH)
+^B	SX	0x02	  2	START OF TEXT (STX)
+^C	EX	0x03	  3	END OF TEXT (ETX)
+^D	ET	0x04	  4	END OF TRANSMISSION (EOT)
+^E	EQ	0x05	  5	ENQUIRY (ENQ)
+^F	AK	0x06	  6	ACKNOWLEDGE (ACK)
+^G	BL	0x07	  7	BELL (BEL)
+^H	BS	0x08	  8	BACKSPACE (BS)
+^I	HT	0x09	  9	CHARACTER TABULATION (HT)
+^@	LF	0x0a	 10	LINE FEED (LF)
+^K	VT	0x0b	 11	LINE TABULATION (VT)
+^L	FF	0x0c	 12	FORM FEED (FF)
+^M	CR	0x0d	 13	CARRIAGE RETURN (CR)
+^N	SO	0x0e	 14	SHIFT OUT (SO)
+^O	SI	0x0f	 15	SHIFT IN (SI)
+^P	DL	0x10	 16	DATALINK ESCAPE (DLE)
+^Q	D1	0x11	 17	DEVICE CONTROL ONE (DC1)
+^R	D2	0x12	 18	DEVICE CONTROL TWO (DC2)
+^S	D3	0x13	 19	DEVICE CONTROL THREE (DC3)
+^T	D4	0x14	 20	DEVICE CONTROL FOUR (DC4)
+^U	NK	0x15	 21	NEGATIVE ACKNOWLEDGE (NAK)
+^V	SY	0x16	 22	SYNCHRONOUS IDLE (SYN)
+^W	EB	0x17	 23	END OF TRANSMISSION BLOCK (ETB)
+^X	CN	0x18	 24	CANCEL (CAN)
+^Y	EM	0x19	 25	END OF MEDIUM (EM)
+^Z	SB	0x1a	 26	SUBSTITUTE (SUB)
+^[	EC	0x1b	 27	ESCAPE (ESC)
+^\	FS	0x1c	 28	FILE SEPARATOR (IS4)
+^]	GS	0x1d	 29	GROUP SEPARATOR (IS3)
+^^	RS	0x1e	 30	RECORD SEPARATOR (IS2)
+^_	US	0x1f	 31	UNIT SEPARATOR (IS1)
+	SP	0x20	 32	SPACE
+#	Nb	0x23	 35	NUMBER SIGN
+$	DO	0x24	 36	DOLLAR SIGN
+@	At	0x40	 64	COMMERCIAL AT
+[	<(	0x5b	 91	LEFT SQUARE BRACKET
+\	//	0x5c	 92	REVERSE SOLIDUS
+]	)>	0x5d	 93	RIGHT SQUARE BRACKET
+^	'>	0x5e	 94	CIRCUMFLEX ACCENT
+`	'!	0x60	 96	GRAVE ACCENT
+{	(!	0x7b	123	LEFT CURLY BRACKET
+|	!!	0x7c	124	VERTICAL LINE
+}	!)	0x7d	125	RIGHT CURLY BRACKET
+~	'?	0x7e	126	TILDE
+^?	DT	0x7f	127	DELETE (DEL)
+~@	PA	0x80	128	PADDING CHARACTER (PAD)
+~A	HO	0x81	129	HIGH OCTET PRESET (HOP)
+~B	BH	0x82	130	BREAK PERMITTED HERE (BPH)
+~C	NH	0x83	131	NO BREAK HERE (NBH)
+~D	IN	0x84	132	INDEX (IND)
+~E	NL	0x85	133	NEXT LINE (NEL)
+~F	SA	0x86	134	START OF SELECTED AREA (SSA)
+~G	ES	0x87	135	END OF SELECTED AREA (ESA)
+~H	HS	0x88	136	CHARACTER TABULATION SET (HTS)
+~I	HJ	0x89	137	CHARACTER TABULATION WITH JUSTIFICATION (HTJ)
+~J	VS	0x8a	138	LINE TABULATION SET (VTS)
+~K	PD	0x8b	139	PARTIAL LINE FORWARD (PLD)
+~L	PU	0x8c	140	PARTIAL LINE BACKWARD (PLU)
+~M	RI	0x8d	141	REVERSE LINE FEED (RI)
+~N	S2	0x8e	142	SINGLE-SHIFT TWO (SS2)
+~O	S3	0x8f	143	SINGLE-SHIFT THREE (SS3)
+~P	DC	0x90	144	DEVICE CONTROL STRING (DCS)
+~Q	P1	0x91	145	PRIVATE USE ONE (PU1)
+~R	P2	0x92	146	PRIVATE USE TWO (PU2)
+~S	TS	0x93	147	SET TRANSMIT STATE (STS)
+~T	CC	0x94	148	CANCEL CHARACTER (CCH)
+~U	MW	0x95	149	MESSAGE WAITING (MW)
+~V	SG	0x96	150	START OF GUARDED AREA (SPA)
+~W	EG	0x97	151	END OF GUARDED AREA (EPA)
+~X	SS	0x98	152	START OF STRING (SOS)
+~Y	GC	0x99	153	SINGLE GRAPHIC CHARACTER INTRODUCER (SGCI)
+~Z	SC	0x9a	154	SINGLE CHARACTER INTRODUCER (SCI)
+~[	CI	0x9b	155	CONTROL SEQUENCE INTRODUCER (CSI)
+~\	ST	0x9c	156	STRING TERMINATOR (ST)
+~]	OC	0x9d	157	OPERATING SYSTEM COMMAND (OSC)
+~^	PM	0x9e	158	PRIVACY MESSAGE (PM)
+~_	AC	0x9f	159	APPLICATION PROGRAM COMMAND (APC)
+|	NS	0xa0	160	NO-BREAK SPACE
+¡	!I	0xa1	161	INVERTED EXCLAMATION MARK
+¢	Ct	0xa2	162	CENT SIGN
+£	Pd	0xa3	163	POUND SIGN
+¤	Cu	0xa4	164	CURRENCY SIGN
+¥	Ye	0xa5	165	YEN SIGN
+¦	BB	0xa6	166	BROKEN BAR
+§	SE	0xa7	167	SECTION SIGN
+¨	':	0xa8	168	DIAERESIS
+©	Co	0xa9	169	COPYRIGHT SIGN
+ª	-a	0xaa	170	FEMININE ORDINAL INDICATOR
+«	<<	0xab	171	LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+¬	NO	0xac	172	NOT SIGN
+­	--	0xad	173	SOFT HYPHEN
+®	Rg	0xae	174	REGISTERED SIGN
+¯	'm	0xaf	175	MACRON
+°	DG	0xb0	176	DEGREE SIGN
+±	+-	0xb1	177	PLUS-MINUS SIGN
+²	2S	0xb2	178	SUPERSCRIPT TWO
+³	3S	0xb3	179	SUPERSCRIPT THREE
+´	''	0xb4	180	ACUTE ACCENT
+µ	My	0xb5	181	MICRO SIGN
+¶	PI	0xb6	182	PILCROW SIGN
+·	.M	0xb7	183	MIDDLE DOT
+¸	',	0xb8	184	CEDILLA
+¹	1S	0xb9	185	SUPERSCRIPT ONE
+º	-o	0xba	186	MASCULINE ORDINAL INDICATOR
+»	>>	0xbb	187	RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+¼	14	0xbc	188	VULGAR FRACTION ONE QUARTER
+½	12	0xbd	189	VULGAR FRACTION ONE HALF
+¾	34	0xbe	190	VULGAR FRACTION THREE QUARTERS
+¿	?I	0xbf	191	INVERTED QUESTION MARK
+À	A!	0xc0	192	LATIN CAPITAL LETTER A WITH GRAVE
+Á	A'	0xc1	193	LATIN CAPITAL LETTER A WITH ACUTE
+Â	A>	0xc2	194	LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+Ã	A?	0xc3	195	LATIN CAPITAL LETTER A WITH TILDE
+Ä	A:	0xc4	196	LATIN CAPITAL LETTER A WITH DIAERESIS
+Å	AA	0xc5	197	LATIN CAPITAL LETTER A WITH RING ABOVE
+Æ	AE	0xc6	198	LATIN CAPITAL LETTER AE
+Ç	C,	0xc7	199	LATIN CAPITAL LETTER C WITH CEDILLA
+È	E!	0xc8	200	LATIN CAPITAL LETTER E WITH GRAVE
+É	E'	0xc9	201	LATIN CAPITAL LETTER E WITH ACUTE
+Ê	E>	0xca	202	LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+Ë	E:	0xcb	203	LATIN CAPITAL LETTER E WITH DIAERESIS
+Ì	I!	0xcc	204	LATIN CAPITAL LETTER I WITH GRAVE
+Í	I'	0xcd	205	LATIN CAPITAL LETTER I WITH ACUTE
+Î	I>	0xce	206	LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+Ï	I:	0xcf	207	LATIN CAPITAL LETTER I WITH DIAERESIS
+Ð	D-	0xd0	208	LATIN CAPITAL LETTER ETH (Icelandic)
+Ñ	N?	0xd1	209	LATIN CAPITAL LETTER N WITH TILDE
+Ò	O!	0xd2	210	LATIN CAPITAL LETTER O WITH GRAVE
+Ó	O'	0xd3	211	LATIN CAPITAL LETTER O WITH ACUTE
+Ô	O>	0xd4	212	LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+Õ	O?	0xd5	213	LATIN CAPITAL LETTER O WITH TILDE
+Ö	O:	0xd6	214	LATIN CAPITAL LETTER O WITH DIAERESIS
+×	*X	0xd7	215	MULTIPLICATION SIGN
+Ø	O/	0xd8	216	LATIN CAPITAL LETTER O WITH STROKE
+Ù	U!	0xd9	217	LATIN CAPITAL LETTER U WITH GRAVE
+Ú	U'	0xda	218	LATIN CAPITAL LETTER U WITH ACUTE
+Û	U>	0xdb	219	LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+Ü	U:	0xdc	220	LATIN CAPITAL LETTER U WITH DIAERESIS
+Ý	Y'	0xdd	221	LATIN CAPITAL LETTER Y WITH ACUTE
+Þ	TH	0xde	222	LATIN CAPITAL LETTER THORN (Icelandic)
+ß	ss	0xdf	223	LATIN SMALL LETTER SHARP S (German)
+à	a!	0xe0	224	LATIN SMALL LETTER A WITH GRAVE
+á	a'	0xe1	225	LATIN SMALL LETTER A WITH ACUTE
+â	a>	0xe2	226	LATIN SMALL LETTER A WITH CIRCUMFLEX
+ã	a?	0xe3	227	LATIN SMALL LETTER A WITH TILDE
+ä	a:	0xe4	228	LATIN SMALL LETTER A WITH DIAERESIS
+å	aa	0xe5	229	LATIN SMALL LETTER A WITH RING ABOVE
+æ	ae	0xe6	230	LATIN SMALL LETTER AE
+ç	c,	0xe7	231	LATIN SMALL LETTER C WITH CEDILLA
+è	e!	0xe8	232	LATIN SMALL LETTER E WITH GRAVE
+é	e'	0xe9	233	LATIN SMALL LETTER E WITH ACUTE
+ê	e>	0xea	234	LATIN SMALL LETTER E WITH CIRCUMFLEX
+ë	e:	0xeb	235	LATIN SMALL LETTER E WITH DIAERESIS
+ì	i!	0xec	236	LATIN SMALL LETTER I WITH GRAVE
+í	i'	0xed	237	LATIN SMALL LETTER I WITH ACUTE
+î	i>	0xee	238	LATIN SMALL LETTER I WITH CIRCUMFLEX
+ï	i:	0xef	239	LATIN SMALL LETTER I WITH DIAERESIS
+ð	d-	0xf0	240	LATIN SMALL LETTER ETH (Icelandic)
+ñ	n?	0xf1	241	LATIN SMALL LETTER N WITH TILDE
+ò	o!	0xf2	242	LATIN SMALL LETTER O WITH GRAVE
+ó	o'	0xf3	243	LATIN SMALL LETTER O WITH ACUTE
+ô	o>	0xf4	244	LATIN SMALL LETTER O WITH CIRCUMFLEX
+õ	o?	0xf5	245	LATIN SMALL LETTER O WITH TILDE
+ö	o:	0xf6	246	LATIN SMALL LETTER O WITH DIAERESIS
+÷	-:	0xf7	247	DIVISION SIGN
+ø	o/	0xf8	248	LATIN SMALL LETTER O WITH STROKE
+ù	u!	0xf9	249	LATIN SMALL LETTER U WITH GRAVE
+ú	u'	0xfa	250	LATIN SMALL LETTER U WITH ACUTE
+û	u>	0xfb	251	LATIN SMALL LETTER U WITH CIRCUMFLEX
+ü	u:	0xfc	252	LATIN SMALL LETTER U WITH DIAERESIS
+ý	y'	0xfd	253	LATIN SMALL LETTER Y WITH ACUTE
+þ	th	0xfe	254	LATIN SMALL LETTER THORN (Icelandic)
+ÿ	y:	0xff	255	LATIN SMALL LETTER Y WITH DIAERESIS
+
+ vim:tw=78:ts=8:ft=help:norl:
