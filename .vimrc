@@ -61,6 +61,7 @@ set iskeyword+=_,$,@,%,#,-
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 "rkdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
+nmap fi :!firefox %.html & <CR><CR>
 
 
 
@@ -151,7 +152,10 @@ func! CompileRunGcc()
 	elseif &filetype == 'python'
 		exec "!python %"
     elseif &filetype == 'mkd'
-        exec "!perl ~/.vim/markdown.pl % > /tmp/markdown.html"<CR>
+"        exec "!touch ~/temp.html"
+"        exec "!perl ~/.vim/markdown.pl % > /tmp/temp.html<"<CR>
+"        exec "!markdown % > /tmp/temp.html<"<CR>
+"        exec "md"
         exec "!firefox /tmp/markdown.html &"
 	endif
 endfunc

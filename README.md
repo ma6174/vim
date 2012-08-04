@@ -13,7 +13,7 @@
 * 增加日历功能
 * 精简了一些没用的.vimrc 配置
 
-##2012年8月2日更新：
+##2012年8月4日更新：
 1. 增加markdown插件
 * 新建markdown文件自动添加表头"charset="utf-8"
 * 按 md 直接生成对应的html文件，如a.md将生成a.md.html
