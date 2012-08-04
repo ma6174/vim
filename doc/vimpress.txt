@@ -1,0 +1,185 @@
+*vimpress.txt*   Plugin for managing wordpress blog from Vim.
+
+Script:   blog.vim
+Authors:  Adrien Friggeri <mailto:adrien@friggeri.net>
+          Pigeond <http://pigeond.net/blog/>
+          * Preston M.[BOYPT] <mailto:pentie@gmail.com>
+          Justin Sattery <mailto:justin.slattery@fzysqr.com>
+          Lenin Lee <mailto:lenin.lee@gmail.com>      
+          * Conner McDaniel <mailto:connermcd@gmail.com>
+    (* Currently developing)
+    Conner's Repository: https://github.com/connermcd/VimRepress
+    Preston's Repository: https://bitbucket.org/pentie/vimrepress
+
+License:  Same terms as Vim itself (see |license|)
+
+============================================================================
+
+*INSTALL*
+
+Download vimpress_2.x.x.zip, extract it in your .vim directory:
+
+  cd ~/.vim
+  unzip /path/to/vimpress_2.x.x.zip
+
+*CONFIGURE*
+
+Edit ~/.vimrc , add a variable named VIMPRESS. Multiple blog configurations are supported.
+
+Example:
+
+let VIMPRESS = [{'username':'user',
+                \'password':'pass',
+                \'blog_url':'http://your-first-blog.com/'
+                \},
+                \{'username':'user',
+                \'blog_url':'http://your-second-blog.com/'
+                \}]
+
+Hardcoding the password is optional. If a password is not provided the plugin
+will prompt for one the first time it's needed.
+
+If you need Markdown support, simply run `sudo apt-get install python-markdown' in Ubuntu. 
+
+If you use other distributions (or OSs), refer to your package manager or the python-markdown 
+project page: http://www.freewisdom.org/projects/python-markdown/Installation
+
+*COMMANDS*
+
+Vimpress Commands (parameters in square brackets are optional): 
+>
+    :BlogList [<edit_type>] [<count>]
+<   Lists a specified number of blog posts or pages for the current blog
+    starting the with most recent.  In this view, you can press <enter> 
+    to open a post for edit, or press <delete> to move a post to trash.
+    The Delete function doesn't actually remove your post, but move to 
+    the trash.
+    [<edit_type>] - either post or page, [Default post].
+    [<count>]  - number to display (only for posts, Default 30)
+>
+    :BlogNew [<edit_type>]
+<   Creates a new page editing window from the current buffer.
+    [<edit_type>] - either post or page. [Default:post]
+>
+    :BlogSave [<save_type>]
+<   Saves the current editing window.
+    [<save_type>] - either post or publish. [Default:draft] 
+>
+    :BlogPreview [<save_type>]
+<   If set to local, converts the editing window to HTML and displays it 
+    locally in a file browser. Otherwise, the command is the same as 
+    :BlogSave except that it opens a preview of the post or page on the blog.
+    [<save_type>] - either local, post, or publish. [Default:local]
+>
+    :BlogOpen <post-link-or-id>
+<   Opens the specified post. 
+    <post-link-or-id> - link you copied from the browser, or simply the 
+                        numberic post id.
+>
+    :BlogSwitch [<index>]
+<   Switches the current working blog to the next in the configuration
+    array or the specified index.
+    [<index>]   - index of blog to switch to.
+>
+    :BlogUpload <file>
+<   Uploads a file to the blog's media library, then the attachment URL
+    will append to the current buffer.
+     <file>     - /path/to/file
+>
+    :BlogCode [<language>]
+<   Appends a pre tag to the end of the current buffer of a specified
+    code language. (i.e. python)
+     [<language>] - the coding language
+
+*TIPS*
+
+|Categories| When you're writing a new post, and you want to fill the "Cats"
+line in the meta field, press <Ctrl-x Ctrl-u> in INSERT mode, a menu will
+show up with all your categories names in your blog. Completion is supported.
+
+|Recovery| If you have a slow connection to your blog, there's a chance that gvim will got hanged during your posting the article, just wait patiently. If still vim crashed with fail posting your article (never happened here), don't  worried, vim had a inteligent recovery system, reopen vim and strike |:recovery| command, your article should appear. Type |:help recovery| for more info.
+
+
+
+*EXAMPLES*
+
+Some commands list above contain special usage, example below may clearify them for you.
+
+>
+    :BlogList             -  List 30 recent posts.
+    :BlogList page        -  List 30 recent pages.
+    :BlogList post 100    -  List 100 recent posts.
+
+    :BlogNew post         -  Write an new post.
+    :BlogNew page         -  Write an new page.
+
+    :BlogSave             -  Save (defautely published.)
+    :BlogSave draft       -  Save as draft.
+
+    :BlogPreview local    -  Preview page/post locally in your browser. 
+    :BlogPreview publish  -  Same as `:BlogSave publish' with brower opened.
+
+    :BlogOpen 679
+    :BlogOpen http://your-first-blog.com/archives/679
+    :BlogOpen http://your-second-blog.com/?p=679
+    :BlogOpen http://your-third-blog.com/with-your-custom-permalink
+<
+
+*CHANGE_LOG*
+
+ 2011 May. 15 [by Preston]
+               Upgrade to 2.0 beta
+               Different command structure
+               Markdown file uploaded when post is saved and interpreted
+                when opened.
+               The open command takes many types of parameters
+
+              [by Conner]
+               Add: autocompletion for tags and categories with ^X^U
+               Add: prompts for password when not hardcoded
+               Add: BlogSwitch now accepts an index parameter
+               Add: Delete function in BlogList view.
+               *Add: HTML highlighting for blog syntax
+               *Add: Delete command
+               *(not yet included in Preston's release version)
+
+ 2011 Mar. 24 [by Lenin Lee]
+               Fix: use setl instead of set to set option value;
+               Add: Detect current buffer content before switch to vimpress 
+               views, open a split buffer to avoid conflicts.
+               Add: Commands to manage wordpress pages.
+
+               [by Preston]
+               Add: Auto charset convert for non-utf8 environment.(Win)
+               Add: Use python markdown module. Both markdown and markdown2
+               are supported.
+
+ 2011 Mar. 15 [by Preston]
+               Fix: MarkdownNewPost may override original mkd source file.
+               Add: MarkdownNewPost command detects title begins with
+                   "#" in first 10 lines of markdown source, copy the line
+                   striped "#" to the new post view.
+
+ 2011 Mar. 7  [by Preston]
+               Add: MarkdownPreview command to preiview markdown in browser.
+               Add: MarkdownNewPost command to convert a markdown
+               written post into html and set to the new post view.
+
+
+ 2011 Mar. 4  [by Preston]
+               Add: Move blog config info to personal .vimrc
+               Add: Multiple blog config is now supported with :BlogSwitch
+               command.
+               Add: Show which blog your editing at :BlogList view.
+               Fix: bug running :BlogList in the List view got error.
+
+ 2011 Feb. 15 [by Preston]
+               Add: BlogPreview Command.
+               Add: BlogCode command args to specify code type
+               Change: blog_url uses pure address.
+               Code: Some code pretty work.
+
+ 2010 Aug. 20 [by Justin] 
+               Fixed a bug with BlogSave command, and added feature to take
+               an existing document and use the BlogNew command to convert 
+               it to a blog post (which can be saved with the header intact). 

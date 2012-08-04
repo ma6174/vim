@@ -1,0 +1,455 @@
+/*
+  title: reset css
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+  title: monsoon css
+*/
+
+.monsoon {
+  color: #333;
+  font: normal 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.wf-active .monsoon {
+  font: normal 14px "ff-meta-web-pro-1", "ff-meta-web-pro-2";
+}
+
+/* =headings
+---------------------------------------------- */
+.monsoon h1 {
+  font-size: 32px;
+  font-weight: normal;
+  margin: 0 0 14px 0;
+}
+
+.monsoon h2 {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0 0 14px 0;
+}
+
+.monsoon h3 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0 0 14px 0;
+}
+
+.monsoon h4 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0 0 14px 0;
+}
+/* ------------------------------------------- */
+
+/* =links
+---------------------------------------------- */
+.monsoon a:link,
+.monsoon a:visited {
+  color: #33a4f4;
+  text-decoration: none;
+}
+
+.monsoon a:hover,
+.monsoon a:active {
+  color: #114591;
+}
+/* ------------------------------------------- */
+
+/* =paragraphs
+---------------------------------------------- */
+.monsoon p {
+  line-height: 24px;
+  margin: 0 0 24px 0;
+}
+
+.monsoon p:last-child {
+  margin: 0;
+}
+/* ------------------------------------------- */
+
+/* =lists
+---------------------------------------------- */
+.monsoon ol {
+  list-style: inside decimal;
+  margin: 0 0 24px 0;
+}
+
+.monsoon ol li {
+  margin: 0 0 8px 0;
+}
+
+.monsoon ol:last-child {
+  margin: 0;
+}
+
+.monsoon ol > ol {
+  padding: 0 0 0 24px;
+}
+
+.monsoon ul {
+  list-style: inside disc;
+  margin: 0 0 24px 0;
+}
+
+.monsoon ul li {
+  margin: 0 0 8px 0;
+}
+
+.monsoon ul:last-child {
+  margin: 0;
+}
+
+.monsoon ul > ul {
+  padding: 0 0 0 24px;
+}
+
+.monsoon dl {
+  margin: 0 0 24px 0;
+}
+
+.monsoon dl dt {
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+.monsoon dl dd {
+  margin: 0 0 12px 0;
+}
+
+.monsoon dl dd:last-child {
+  margin: 0;
+}
+
+.monsoon dl:last-child {
+  margin: 0;
+}
+
+.monsoon dialog {
+  display: block;
+  margin: 0 0 24px 0;
+}
+
+.monsoon dialog dt {
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+.monsoon dialog dd {
+  margin: 0 0 12px 0;
+}
+
+.monsoon dialog dd:last-child {
+  margin: 0;
+}
+
+.monsoon dialog:last-child {
+  margin: 0;
+}
+/* ------------------------------------------- */
+
+/* =blockquotes
+---------------------------------------------- */
+.monsoon blockquote {
+  border-left: 3px solid #e5e5e5;
+  color: #666;
+  font-family: "ff-meta-serif-web-pro-1", "ff-meta-serif-web-pro-2", Georgia, serif;
+  margin: 0 0 24px 0;
+  padding: 0 0 0 24px;
+}
+/* ------------------------------------------- */
+
+/* =tables
+---------------------------------------------- */
+.monsoon table {
+  margin: 0 0 24px 0;
+  width: 100%;
+}
+
+.monsoon table caption {
+  font-weight: bold;
+  margin: 0 0 18px 0;
+  text-align: left;
+}
+
+.monsoon table thead {
+  border-top: 2px solid #e5e5e5;
+}
+
+.monsoon table thead tr th {
+  font-weight: bold;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.monsoon table tbody tr td {
+  border-top: 1px solid #e5e5e5;
+  padding: 8px 0;
+}
+
+.monsoon table tfoot {
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.monsoon table tfoot tr td {
+  border-top: 1px solid #e5e5e5;
+  padding: 8px 0;
+}
+/* ------------------------------------------- */
+
+/* =others
+---------------------------------------------- */
+.monsoon abbr {
+  border-bottom: 1px dotted #bbb;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.monsoon b {
+  font-weight: bold;
+}
+
+.monsoon cite {
+  color: #666;
+  font-style: italic;
+}
+
+.monsoon code {
+  font: 12px Monaco, monospace;
+}
+
+.wf-active .monsoon code {
+  font: 15px "inconsolata-1", "inconsolata-2";
+}
+
+.monsoon del {
+  color: #666;
+  font-style: line-through;
+}
+
+.monsoon dfn {
+  border-bottom: 1px dotted #bbb;
+  font-style: italic;
+}
+
+.monsoon em {
+  font-style: italic;
+}
+
+.monsoon i {
+  font-style: italic;
+}
+
+.monsoon ins {
+  color: #e93043;
+  text-decoration: none;
+}
+
+.monsoon kbd {
+  font: 12px Monaco, monospace;
+}
+
+.wf-active .monsoon kbd {
+  font: 15px "inconsolata-1", "inconsolata-2" , Monaco, monospace;
+}
+
+.monsoon mark {
+  background: #ffff99;
+  color: #533b18;
+  padding: 2px 3px;
+}
+
+.wf-active .monsoon mark {
+  padding: 0 4px;
+}
+
+.monsoon samp {
+  font: 12px Monaco, monospace;
+}
+
+.wf-active .monsoon samp {
+  font: 15px "inconsolata-1", "inconsolata-2" , Monaco, monospace;
+}
+
+.monsoon small {
+  font-size: 11px;
+}
+
+.monsoon strong {
+  font-weight: bold;
+}
+
+.monsoon sup {
+  font-size: 11px;
+  vertical-align: super;
+}
+
+.monsoon sub {
+  font-size: 11px;
+  vertical-align: sub;
+}
+
+.monsoon var {
+  font: 12px Monaco, monospace;
+}
+
+.wf-active .monsoon var {
+  font: 15px "inconsolata-1", "inconsolata-2" , Monaco, monospace;
+}
+/* ------------------------------------------- */
+
+/* =preformatted text
+---------------------------------------------- */
+.monsoon pre {
+  line-height: 24px;
+  margin: 0 0 24px 0;
+  white-space: -moz-pre-wrap !important;
+  white-space: -o-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.monsoon pre:last-child {
+  margin: 0;
+}
+
+.monsoon .highlight pre {
+  background: #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #cdcdcd;
+  -moz-box-shadow: 0 1px 0 #fff, 0 1px 3px rgba(0, 0, 0, .1) inset;
+  -webkit-box-shadow: 0 1px 0 #fff, 0 1px 3px rgba(0, 0, 0, .1) inset;
+  box-shadow: 0 1px 0 #fff, 0 1px 3px rgba(0, 0, 0, .1) inset;
+  color: #000;
+  font: 12px Monaco, monospace;
+  overflow-x: auto;
+  padding: 12px;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.wf-active .monsoon .highlight pre {
+  font: 14px "inconsolata-1", "inconsolata-2";
+}
+
+/*
+  title: text css
+*/
+
+#text {
+  background: url("../images/cloudapp/body-bg.png") repeat #f8f8f8;
+  color: #494949;
+  font: 12px "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif;
+  min-width: 320px;
+}
+
+/* =header
+---------------------------------------------- */
+#text #header {
+  background: url("../images/cloudapp/header-bg.png") repeat-x;
+  height: 43px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+@-webkit-keyframes titleFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#text #header h2 {
+  -webkit-animation-duration: .5s;
+  -webkit-animation-name: titleFadeIn;
+  -webkit-animation-timing-function: linear;
+  color: #787878;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  line-height: 42px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+}
+
+/* ------------------------------------------- */
+
+/* =content
+---------------------------------------------- */
+#text #content {
+  margin: 0 auto;
+  max-width: 640px;
+  padding: 48px 18px;
+}
+
+.wf-active #text #content {
+  padding: 32px 18px 48px 18px;
+}
+/* ------------------------------------------- */
+
+@media screen and (max-width: 479px) {
+  #text header h2 {
+    display: none !important;
+  }
+}
+
+@media screen and (max-device-width: 480px) {
+  #text #content {
+    padding: 18px !important;
+  }
+}

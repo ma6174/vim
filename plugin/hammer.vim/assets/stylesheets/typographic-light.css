@@ -1,0 +1,198 @@
+/* v1.0 | 20080212 */
+/* Original Source: http://meyerweb.com/eric/tools/css/reset/ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td                          { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+body                        { line-height: 1 }
+ol,
+ul                          { list-style: none }
+blockquote,
+q                           { quotes: none }
+blockquote:before,
+blockquote:after,
+q:before,
+q:after                     { content: ''; content: none; }
+/* remember to define focus styles! */
+:focus                      { outline: 0 }
+/* remember to highlight inserts somehow! */
+ins                         { text-decoration: none }
+del                         { text-decoration: line-through }
+/* tables still need 'cellspacing="0"' in the markup */
+table                       { border-collapse: collapse; border-spacing: 0; }
+/*
+Type-A-File "Editorial" theme designed by Matthew Buchanan
+http://matthewbuchanan.name
+@mrb
+
+Based on original CSS by Russ Maschmeyer, aka StrangeNative.
+http://www.strangenative.com
+@strangenative
+
+Creative Commons License by Attribution.
+Feel free to take it, adapt it, & use it on both commercial and non-commercial projects.
+Though we'd like a smidgeon of credit, so just leave this bit in here. K?
+*/
+/*Pick Your Fonts*/
+body,
+h3,
+h4,
+h5,
+h6,
+.run-in,
+dt,
+h1,
+h2,
+.pullquote,
+blockquote,
+.sidenote h1,
+aside h1,
+.pullquote,
+.drop-cap,
+cite                        { font-family: Georgia, "Times New Roman", serif }
+/*Size & Vertical Rhythm*/
+body                        { font-size: 87.5%; font-size: 14px; line-height: 1.5; }
+/*HTML Standard Elements*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6                          { font-weight: 500 }
+h1                          { color: #d33682; border-bottom: 0.05em solid #d33682; font-size: 2.7em; font-weight:bold; line-height: 1.1; margin: 1.3em 0 0; font-family:Helvetica,Arial,sans-serif;padding: 0.3em 0 0.65em; }
+h2                          { color: #cb4b16; font-size: 1.7em; letter-spacing: .25em; line-height: 1.1; margin: 2em 0 0.5em; text-transform: uppercase; }
+h1+img,
+h2+img                      { margin-top: 0.75em }
+h3                          { color: #b58900; letter-spacing: 0.15em; font-size: 1.125em; margin-top: 1.875em; text-transform: uppercase;}
+h4                          { color: #859900; font-weight: bold; font-size: 1em; margin-top: 0.5em; }
+small                       { display: block; font-size: 0.9em; letter-spacing: 0.05em; margin: 2.2em 0 -0.2em; line-height: 1.75; opacity: 0.6; }
+h1+p,
+h2+p,
+h3+p,
+h4+p,
+h1+ul,
+h2+ul,
+h3+ul,
+h4+ul,
+h1+ol,
+h2+ol,
+h3+ol,
+h4+ol,
+h1+form,
+h2+form,
+h3+form,
+h4+form                     { margin: 1em 0 1em; }
+p,
+ul,
+ol,
+form                        { margin: 1.5em 0 1em }
+ul                          { list-style-position: inside; list-style-type: disc; line-height: 1.5; }
+li                          { margin-bottom: 0.75em }
+ol                          { list-style-position: inside; list-style-type: decimal; }
+ul ul,
+ol ol                       { margin: 1em 0 1.5em 1em; }
+blockquote                  { font-style: italic; margin-right: 5em; }
+blockquote:before           { font-family: Monaco,Consolas,"Lucida Console",monospace; content: "“"; font-size: 2.1em; font-style: normal; text-indent: -0.75em; float: left; line-height: 1.25; }
+cite                        { display: block; text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.75em; font-weight: 900; font-style: normal; font-size: 0.85em; }
+cite:before                 { content: "—"; margin-left: -1.75em; margin-right: 0.5em; opacity: 0.3; }
+pre                         { padding: 0.75em; background: #eee8d5; margin: 1.5em 0 0; }
+code,
+pre code                    { font-family: Consolas,"Lucida Console",Monaco,monospace }
+p code,
+li code                     { background-color: #eee8d5; padding: 0.15em 0.3em; font-size: 0.9em; }
+dl                          { margin: 1.75em 0 }
+dt                          { margin-top: 1.25em; font-size: 1.13em; font-weight: 700; }
+dd                          { font-style: italic; font-size: 1em; margin-top: 1em; margin-right: 5em; line-height: 1.6; border-left: 1px solid #93a1a1; padding-left: 1em; }
+abbr                        { text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.1em; }
+p                           { margin-bottom: 0; hyphenate: auto; hyphenate-before: 2; hyphenate-after: 3; hyphenate-lines: 3; orphans: 4; }
+p span.pullquote            { text-indent: 0 }
+hr                          { display: block;position: relative;padding: 0;margin: 2.5em 0 0 0;width: 100%;clear: both;border: none;border-top: 0.5em solid #B58900;overflow: visible;}
+
+
+
+/* Tables
+-------------------------------------------------------------- */
+/*
+  Because of the need for padding on TH and TD, the vertical rhythm
+  on table cells has to be 27px, instead of the standard 18px or 36px
+  of other elements.
+ */
+table                       { margin-bottom: 1.4em; width: 100%; }
+th                          { font-weight: bold }
+thead th                    { background: #586e75 }
+th,
+td,
+caption                     { padding: 4px 10px 4px 5px }
+/*
+  You can zebra-stripe your tables in outdated browsers by adding
+  the class "even" to every other table row.
+ */
+tbody tr:nth-child(even) td,
+tbody tr.even td            { background: #eee8d5 }
+tfoot                       { font-style: italic }
+caption                     { background: #93a1a1 }
+
+/* Custom for Hammer */
+body                        { background: #002b36; color: #657b83; padding: 0; margin: 0; }
+body #content               { background: #fdf6e3; margin: 0 auto; padding: 50px; width: 680px; }
+a                           { color: #268bd2; }
+a:hover                     { color: #fdf6e3; background: #268bd2; }
+
