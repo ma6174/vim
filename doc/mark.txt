@@ -1,0 +1,565 @@
+*mark.txt*              Highlight several words in different colors simultaneously.
+
+			    MARK    by Ingo Karkat
+		       (original version by Yuheng Xie)
+								    *mark.vim*
+description			|mark-description|
+usage				|mark-usage|
+installation			|mark-installation|
+configuration			|mark-configuration|
+limitations			|mark-limitations|
+known problems			|mark-known-problems|
+todo				|mark-todo|
+history				|mark-history|
+
+==============================================================================
+DESCRIPTION						    *mark-description*
+
+This plugin adds mappings and a :Mark command to highlight several words in
+different colors simultaneously, similar to the built-in 'hlsearch'
+highlighting of search results and the * |star| command. For example, when you
+are browsing a big program file, you could highlight multiple identifiers in
+parallel. This will make it easier to trace the source code.
+
+This is a continuation of vimscript #1238 by Yuheng Xie, who apparently
+doesn't maintain his original version anymore and cannot be reached via the
+email address in his profile. This plugin offers the following advantages over
+the original:
+- Much faster, all colored words can now be highlighted, no more clashes with
+  syntax highlighting (due to use of matchadd()).
+- Many bug fixes.
+- Jumps behave like the built-in search, including wrap and error messages.
+- Like the built-in commands, jumps take an optional [count] to quickly skip
+  over some marks.
+- Marks can be persisted, and patterns can be added / subtracted from
+  mark highlight groups.
+
+RELATED WORKS								     *
+
+- MultipleSearch (vimscript #479) can highlight in a single window and in all
+  buffers, but still relies on the :syntax highlighting method, which is
+  slower and less reliable.
+- http://vim.wikia.com/wiki/Highlight_multiple_words offers control over the
+  color used by mapping the 1-9 keys on the numeric keypad, persistence, and
+  highlights only a single window.
+- highlight.vim (vimscript #1599) highlights lines or patterns of interest in
+  different colors, using mappings that start with CTRL-H and work on cword.
+- quickhl.vim (vimscript #3692) can also list the matches with colors and in
+  addition offers on-the-fly highlighting of the current word (like many IDEs
+  do).
+
+==============================================================================
+USAGE								  *mark-usage*
+
+HIGHLIGHTING						   *mark-highlighting*
+						     *<Leader>m* *v_<Leader>m*
+<Leader>m		Mark the word under the cursor, similar to the |star|
+			command. The next free highlight group is used.
+			If already on a mark: Clear the mark, like
+			|<Leader>n|.
+{Visual}<Leader>m	Mark or unmark the visual selection.
+[N]<Leader>m		With [N], mark the word under the cursor with the
+			named highlight group [N]. When that group is not
+			empty, the word is added as an alternative match, so
+			you can highlight multiple words with the same color.
+			When the word is already contained in the list of
+			alternatives, it is removed.
+
+			When [N] is greater than the number of defined mark
+			groups, a summary of marks is printed. Active mark
+			groups are prefixed with "*" (or "M*" when there are
+			M pattern alternatives), the default next group with
+			">", the last used search with "/" (like |:Marks|
+			does). Input the mark group, accept the default with
+			<CR>, or abort with <Esc> or any other key.
+			This way, when unsure about which number represents
+			which color, just use 99<Leader>n and pick the color
+			interactively!
+
+{Visual}[N]<Leader>m	Ditto, based on the visual selection.
+
+						     *<Leader>r* *v_<Leader>r*
+<Leader>r		Manually input a regular expression to mark.
+{Visual}<Leader>r	Ditto, based on the visual selection.
+
+			In accordance with the built-in |star| command,
+			all these mappings use 'ignorecase', but not
+			'smartcase'.
+								   *<Leader>n*
+<Leader>n		Clear the mark under the cursor.
+			If not on a mark: Disable all marks, similar to
+			|:nohlsearch|.
+			Note: Marks that span multiple lines are not detected,
+			so the use of <Leader>n on such a mark will
+			unintentionally remove all marks! Use
+			{Visual}<Leader>r or :Mark {pattern} to clear
+			multi-line marks (or pass [N] if you happen to know
+			the group number).
+[N]<Leader>n		Clear the marks represented by highlight group [N].
+
+								       *:Mark*
+:[N]Mark		Clear the marks represented by highlight group [N].
+:[N]Mark {pattern}	Mark or unmark {pattern}. Unless [N] is given, the
+			next free highlight group is used.
+			With [N], mark the word under the cursor with the
+			named highlight group [N]. When that group is not
+			empty, the word is added as an alternative match, so
+			you can highlight multiple words with the same color.
+			When the word is already contained in the list of
+			alternatives, it is removed.
+			For implementation reasons, {pattern} cannot use the
+			'smartcase' setting, only 'ignorecase'.
+:Mark			Disable all marks, similar to |:nohlsearch|. Marks
+			will automatically re-enable when a mark is added or
+			removed, or a search for marks is performed.
+								  *:MarkClear*
+:MarkClear		Clear all marks. In contrast to disabling marks, the
+			actual mark information is cleared, the next mark will
+			use the first highlight group. This cannot be undone.
+
+
+SEARCHING						      *mark-searching*
+			    *<Leader>star* *<Leader>#* *<Leader>/* *<Leader>?*
+[count]*         [count]#
+[count]<Leader>* [count]<Leader>#
+[count]<Leader>/ [count]<Leader>?
+			Use these six keys to jump to the [count]'th next /
+			previous occurrence of a mark.
+			You could also use Vim's / and ? to search, since the
+			mark patterns are (optionally, see configuration)
+			added to the search history, too.
+
+            Cursor over mark                    Cursor not over mark
+ ---------------------------------------------------------------------------
+  <Leader>* Jump to the next occurrence of      Jump to the next occurrence of
+            current mark, and remember it       "last mark".
+            as "last mark".
+
+  <Leader>/ Jump to the next occurrence of      Same as left.
+            ANY mark.
+
+   *        If <Leader>* is the most recently   Do Vim's original * command.
+            used, do a <Leader>*; otherwise
+            (<Leader>/ is the most recently
+            used), do a <Leader>/.
+
+			Note: When the cursor is on a mark, the backwards
+			search does not jump to the beginning of the current
+			mark (like the built-in search), but to the previous
+			mark. The entire mark text is treated as one entity.
+
+			You can use Vim's |jumplist| to go back to previous
+			mark matches and the position before a mark search.
+
+MARK PERSISTENCE					    *mark-persistence*
+
+The marks can be kept and restored across Vim sessions, using the |viminfo|
+file. For this to work, the "!" flag must be part of the 'viminfo' setting: >
+    set viminfo+=!  " Save and restore global variables.
+<								   *:MarkLoad*
+:MarkLoad		Restore the marks from the previous Vim session. All
+			current marks are discarded.
+								   *:MarkSave*
+:MarkSave		Save the currently defined marks (or clear the
+			persisted marks if no marks are currently defined) for
+			use in a future Vim session.
+
+By default, automatic persistence is enabled (so you don't need to explicitly
+|:MarkSave|), but you have to explicitly load the persisted marks in a new Vim
+session via |:MarkLoad|, to avoid that you accidentally drag along outdated
+highlightings from Vim session to session, and be surprised by the arbitrary
+highlight groups and occasional appearance of forgotten marks. If you want
+just that though and automatically restore any marks, set |g:mwAutoLoadMarks|.
+
+You can also initialize some marks (even using particular highlight groups) to
+static values, e.g. by including this in |vimrc|: >
+    runtime plugin/mark.vim
+    silent MarkClear
+    5Mark foo
+    6Mark bar
+Or you can define custom commands that preset certain marks: >
+    command -bar MyMarks silent MarkClear | execute '5Mark foo' | execute '6Mark bar'
+Or a command that adds to the existing marks and then toggles them: >
+    command -bar ToggleFooBarMarks execute 'Mark foo' | execute 'Mark bar'
+<
+MARK INFORMATION					    *mark-information*
+
+Both |mark-highlighting| and |mark-searching| commands print information about
+the mark and search pattern, e.g.
+	mark-1/\<pattern\> ~
+This is especially useful when you want to add or subtract patterns to a mark
+highlight group via [N].
+
+								      *:Marks*
+:Marks			List all mark highlight groups and the search patterns
+			defined for them.
+			The group that will be used for the next |:Mark| or
+			|<Leader>m| command (with [N]) is shown with a ">".
+			The last mark used for a search (via |<Leader>*|) is
+			shown with a "/".
+
+MARK HIGHLIGHTING PALETTES					*mark-palette*
+
+The plugin comes with three predefined palettes: original, extended, and
+maximum. You can dynamically toggle between them, e.g. when you need more
+marks or a different set of colors.
+								*:MarkPalette*
+:MarkPalette {palette}	Highlight existing and future marks with the colors
+			defined in {palette}. If the new palette contains less
+			mark groups than the current one, the additional marks
+			are lost.
+			You can use |:command-completion| for {palette}.
+
+See |g:mwDefaultHighlightingPalette| for how to change the default palette,
+and |mark-palette-define| for how to add your own custom palettes.
+
+==============================================================================
+INSTALLATION						   *mark-installation*
+
+This script is packaged as a|vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vba.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim mark.vba.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES						   *mark-dependencies*
+
+- Requires Vim 7.1 with "matchadd()", or Vim 7.2 or higher.
+
+==============================================================================
+CONFIGURATION						  *mark-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|.
+
+					 *mark-colors* *mark-highlight-colors*
+This plugin defines 6 mark groups:
+    1: Cyan  2:Green  3:Yellow  4:Red  5:Magenta  6:Blue ~
+Higher numbers always take precedence and are displayed above lower ones.
+
+					      *g:mwDefaultHighlightingPalette*
+Especially if you use GVIM, you can switch to a richer palette of up to 18
+colors: >
+    let g:mwDefaultHighlightingPalette = 'extended'
+Or, if you have both good eyes and display, you can try a palette that defines
+27, 58, or even 77 colors, depending on the number of available colors: >
+    let g:mwDefaultHighlightingPalette = 'maximum'
+<
+If you like the additional colors, but don't need that many of them, restrict
+their number via: >
+	let g:mwDefaultHighlightingNum = 9
+<
+							*mark-colors-redefine*
+If none of the default highlightings suits you, define your own colors in your
+vimrc file (or anywhere before this plugin is sourced), in the following form
+(where N = 1..): >
+    highlight MarkWordN ctermbg=Cyan ctermfg=Black guibg=#8CCBEA guifg=Black
+You can also use this form to redefine only some of the default highlightings.
+If you want to avoid losing the highlightings on |:colorscheme| commands, you
+need to re-apply your highlights on the |ColorScheme| event, similar to how
+this plugin does. Or you define the palette not via :highlight commands, but
+use the plugin's infrastructure: >
+    let g:mwDefaultHighlightingPalette = [
+    \	{ 'ctermbg':'Cyan', 'ctermfg':'Black', 'guibg':'#8CCBEA', 'guifg':'Black' },
+    \	...
+    \]
+<							 *mark-palette-define*
+If you want to switch multiple palettes during runtime, you need to define
+them as proper palettes: >
+    let g:mwPalettes['mypalette'] = [
+    \	{ 'ctermbg':'Cyan', 'ctermfg':'Black', 'guibg':'#8CCBEA', 'guifg':'Black' },
+    \	...
+    \]
+    let g:mwPalettes['other'] = [ ... ]
+    let g:mwDefaultHighlightingPalette = 'mypalette'
+To add your palette to the existing ones, do this after the default palette
+has been defined, e.g. in .vim/after/plugin/mark.vim). Alternatively, you can
+also completely redefine all available palettes in .vimrc.
+
+The search type highlighting (in the search message) can be changed via: >
+    highlight link SearchSpecialSearchType MoreMsg
+<
+								 *g:mwHistAdd*
+By default, any marked words are also added to the search (/) and input (@)
+history; if you don't want that, remove the corresponding symbols from: >
+    let g:mwHistAdd = '/@'
+<
+							   *g:mwAutoLoadMarks*
+To enable the automatic restore of marks from a previous Vim session: >
+    let g:mwAutoLoadMarks = 1
+<							   *g:mwAutoSaveMarks*
+To turn off the automatic persistence of marks across Vim sessions: >
+    let g:mwAutoSaveMarks = 0
+You can still explicitly save marks via |:MarkSave|.
+
+							      *g:mwIgnoreCase*
+If you have set 'ignorecase', but want marks to be case-insensitive, you can
+override the default behavior of using 'ignorecase' by setting: >
+	let g:mwIgnoreCase = 0
+<
+
+							       *mark-mappings*
+You can use different mappings by mapping to the <Plug>Mark... mappings (use
+":map <Plug>Mark" to list them all) before this plugin is sourced.
+
+There are no default mappings for toggling all marks and for the |:MarkClear|
+command, but you can define some yourself: >
+    nmap <Leader>M <Plug>MarkToggle
+    nmap <Leader>N <Plug>MarkAllClear
+<
+To remove the default overriding of * and #, use: >
+    nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+    nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+<
+						 *mark-whitespace-indifferent*
+Some people like to create a mark based on the visual selection, like
+|v_<Leader>m|, but have whitespace in the selection match any whitespace when
+searching (searching for "hello world" will also find "hello<Tab>world" as
+well as "hello" at the end of a line, with "world" at the start of the next
+line). The Vim Tips Wiki describes such a setup for the built-in search at
+    http://vim.wikia.com/wiki/Search_for_visually_selected_text
+You can achieve the same with the Mark plugin through the following scriptlet: >
+    function! s:GetVisualSelectionAsLiteralWhitespaceIndifferentPattern()
+    	return substitute(escape(mark#GetVisualSelection(), '\' . '^$.*[~'), '\_s\+', '\\_s\\+', 'g')
+    endfunction
+    vnoremap <silent> <Plug>MarkWhitespaceIndifferent :<C-u>if !mark#DoMark(v:count, <SID>GetVisualSelectionAsLiteralWhitespaceIndifferentPattern())<Bar>execute "normal! \<lt>C-\>\<lt>C-n>\<lt>Esc>"<Bar>endif<CR>
+Using this, you can assign a new visual mode mapping <Leader>* >
+    vmap <Leader>* <Plug>MarkWhitespaceIndifferent
+or override the default |v_<Leader>m| mapping, in case you always want this
+behavior: >
+    vmap <Plug>IgnoreMarkSet <Plug>MarkSet
+    vmap <Leader>m <Plug>MarkWhitespaceIndifferent
+<
+==============================================================================
+LIMITATIONS						    *mark-limitations*
+
+- If the 'ignorecase' setting is changed, there will be discrepancies between
+  the highlighted marks and subsequent jumps to marks.
+- If {pattern} in a :Mark command contains atoms that change the semantics of
+  the entire (|/\c|, |/\C|) or following (|/\v|,|/\V|, |/\M|) regular
+  expression, there may be discrepancies between the highlighted marks and
+  subsequent jumps to marks.
+
+KNOWN PROBLEMS						 *mark-known-problems*
+
+TODO								   *mark-todo*
+
+IDEAS								  *mark-ideas*
+
+Taken from an alternative implementation at
+http://vim.wikia.com/wiki/Highlight_multiple_words:
+- Use keys 1-9 on the numeric keypad to toggle a highlight group number.
+
+==============================================================================
+HISTORY								*mark-history*
+
+2.7.0	04-Jul-2012
+- ENH: Implement :MarkPalette command to switch mark highlighting on-the-fly
+  during runtime.
+- Add "maximum" palette contributed by rockybalboa4.
+
+2.6.5	24-Jun-2012
+- Don't define the default <Leader>m and <Leader>r mappings in select mode,
+  just visual mode. Thanks to rockybalboa4 for pointing this out.
+
+2.6.4	23-Apr-2012
+- Allow to override 'ignorecase' setting via g:mwIgnoreCase. Thanks to fanhe
+  for the idea and sending a patch.
+
+2.6.3	27-Mar-2012
+- ENH: Allow choosing of palette and limiting of default mark highlight groups
+  via g:mwDefaultHighlightingPalette and g:mwDefaultHighlightingNum.
+- ENH: Offer an extended color palette in addition to the original 6-color one.
+  Enable this via :let g:mwDefaultHighlightingPalette = "extended" in your
+  vimrc.
+
+2.6.2	26-Mar-2012
+- ENH: When a [count] exceeding the number of available mark groups is given,
+  a summary of marks is given and the user is asked to select a mark group.
+  This allows to interactively choose a color via 99<Leader>m.
+  If you use the |mark-whitespace-indifferent| mappings, *** PLEASE UPDATE THE
+  vnoremap <Plug>MarkWhitespaceIndifferent DEFINITION ***
+- ENH: Include count of alternative patterns in :Marks list.
+- CHG: Use ">" for next mark and "/" for last search in :Marks.
+
+2.6.1	23-Mar-2012
+- ENH: Add :Marks command that prints all mark highlight groups and their
+  search patterns, plus information about the current search mark, next mark
+  group, and whether marks are disabled.
+- ENH: Show which mark group a pattern was set / added / removed / cleared.
+- FIX: When the cursor is positioned on the current mark, [N]<Leader>n /
+  <Plug>MarkClear with [N] appended the pattern for the current mark (again
+  and again) instead of clearing it. Must not pass current mark pattern when
+  [N] is given.
+- CHG: Show mark group number in same-mark search and rename search types from
+  "any-mark", "same-mark", and "new-mark" to the shorter "mark-*", "mark-N",
+  and "mark-N!", respectively.
+
+2.6.0	22-Mar-2012
+- ENH: Allow [count] for <Leader>m and :Mark to add / subtract match to / from
+  highlight group [count], and use [count]<Leader>n to clear only highlight
+  group [count]. This was also requested by Philipp Marek.
+- FIX: :Mark and <Leader>n actually toggled marks back on when they were
+  already off. Now, they stay off on multiple invocations. Use :call
+  mark#Toggle() / <Plug>MarkToggle if you want toggling.
+
+2.5.3	02-Mar-2012
+- BUG: Version check mistakenly excluded Vim 7.1 versions that do have the
+  matchadd() function. Thanks to Philipp Marek for sending a patch.
+
+2.5.2	09-Nov-2011
+Fixed various problems with wrap-around warnings:
+- BUG: With a single match and 'wrapscan' set, a search error was issued.
+- FIX: Backwards search with single match leads to wrong error message
+  instead.
+- FIX: Wrong logic for determining l:isWrapped lets wrap-around go undetected.
+
+2.5.1	17-May-2011
+- FIX: == comparison in s:DoMark() leads to wrong regexp (\A vs. \a) being
+  cleared when 'ignorecase' is set. Use case-sensitive comparison ==# instead.
+- Refine :MarkLoad messages
+- Add whitespace-indifferent visual mark configuration example. Thanks to Greg
+  Klein for the suggestion.
+
+2.5.0	07-May-2011
+- ENH: Add explicit mark persistence via :MarkLoad and :MarkSave commands and
+  automatic persistence via the g:mwAutoLoadMarks and g:mwAutoSaveMarks
+  configuration flags. (Request from Mun Johl, 16-Apr-2010)
+- Expose toggling of mark display (keeping the mark patterns) via new
+  <Plug>MarkToggle mapping. Offer :MarkClear command as a replacement for the
+  old argumentless :Mark command, which now just disables, but not clears all
+  marks.
+
+2.4.4	18-Apr-2011
+- BUG: Include trailing newline character in check for current mark, so that a
+  mark that matches the entire line (e.g. created by V<Leader>m) can be
+  cleared via <Leader>n. Thanks to ping for reporting this.
+- FIX: On overlapping marks, mark#CurrentMark() returned the lowest, not the
+  highest visible mark. So on overlapping marks, the one that was not visible
+  at the cursor position was removed; very confusing! Use reverse iteration
+  order.
+- FIX: To avoid an arbitrary ordering of highlightings when the highlighting
+  group names roll over, and to avoid order inconsistencies across different
+  windows and tabs, we assign a different priority based on the highlighting
+  group.
+
+2.4.3	16-Apr-2011
+- Avoid losing the mark highlightings on :syn on or :colorscheme commands.
+  Thanks to Zhou YiChao for alerting me to this issue and suggesting a fix.
+- Made the script more robust when somehow no highlightings have been defined
+  or when the window-local reckoning of match IDs got lost. I had very
+  occasionally encountered such script errors in the past.
+- Made global housekeeping variables script-local, only g:mwHistAdd is used
+  for configuration.
+
+2.4.2	14-Jan-2011 (unreleased)
+- FIX: Capturing the visual selection could still clobber the blockwise yank
+  mode of the unnamed register.
+
+2.4.1	13-Jan-2011
+- FIX: Using a named register for capturing the visual selection on
+  {Visual}<Leader>m and {Visual}<Leader>r clobbered the unnamed register. Now
+  using the unnamed register.
+
+2.4.0	13-Jul-2010
+- ENH: The MarkSearch mappings (<Leader>[*#/?]) add the original cursor
+  position to the jump list, like the built-in [/?*#nN] commands. This allows
+  to use the regular jump commands for mark matches, like with regular search
+  matches.
+
+2.3.3	19-Feb-2010
+- BUG: Clearing of an accidental zero-width match (e.g. via :Mark \zs) results
+  in endless loop. Thanks to Andy Wokula for the patch.
+
+2.3.2	17-Nov-2009
+- BUG: Creation of literal pattern via '\V' in {Visual}<Leader>m mapping
+  collided with individual escaping done in <Leader>m mapping so that an
+  escaped '\*' would be interpreted as a multi item when both modes are used
+  for marking. Thanks to Andy Wokula for the patch.
+
+2.3.1	06-Jul-2009
+- Now working correctly when 'smartcase' is set. All mappings and the :Mark
+  command use 'ignorecase', but not 'smartcase'.
+
+2.3.0	04-Jul-2009
+- All jump commands now take an optional [count], so you can quickly skip over
+  some marks, as with the built-in */# and n/N commands. For this, the entire
+  core search algorithm has been rewritten. The script's logic has been
+  simplified through the use of Vim 7 features like Lists.
+- Now also printing a Vim-alike search error message when 'nowrapscan' is set.
+
+2.2.0	02-Jul-2009
+- Split off functions into autoload script.
+- Initialization of global variables and autocommands is now done lazily on
+  the first use, not during loading of the plugin. This reduces Vim startup
+  time and footprint as long as the functionality isn't yet used.
+- Split off documentation into separate help file. Now packaging as VimBall.
+
+
+2.1.0	06-Jun-2009
+- Replaced highlighting via :syntax with matchadd() / matchdelete(). This
+  requires Vim 7.2 / 7.1 with patches. This method is faster, there are no
+  more clashes with syntax highlighting (:match always has preference), and
+  the background highlighting does not disappear under 'cursorline'.
+- Using winrestcmd() to fix effects of :windo: By entering a window, its
+  height is potentially increased from 0 to 1.
+- Handling multiple tabs by calling s:UpdateScope() on the TabEnter event.
+
+2.0.0	01-Jun-2009
+- Now using Vim List for g:mwWord and thus requiring Vim 7. g:mwCycle is now
+  zero-based, but the syntax groups "MarkWordx" are still one-based.
+- Factored :syntax operations out of s:DoMark() and s:UpdateMark() so that
+  they can all be done in a single :windo.
+- Normal mode <Plug>MarkSet now has the same semantics as its visual mode
+  cousin: If the cursor is on an existing mark, the mark is removed.
+  Beforehand, one could only remove a visually selected mark via again
+  selecting it. Now, one simply can invoke the mapping when on such a mark.
+
+1.6.1	31-May-2009
+Publication of improved version by Ingo Karkat.
+- Now prepending search type ("any-mark", "same-mark", "new-mark") for better
+  identification.
+- Retired the algorithm in s:PrevWord in favor of simply using <cword>, which
+  makes mark.vim work like the * command. At the end of a line, non-keyword
+  characters may now be marked; the previous algorithm preferred any preceding
+  word.
+- BF: If 'iskeyword' contains characters that have a special meaning in a
+  regexp (e.g. [.*]), these are now escaped properly.
+- Highlighting can now actually be overridden in the vimrc (anywhere _before_
+  sourcing this script) by using ':hi def'.
+- Added missing setter for re-inclusion guard.
+
+1.5.0	01-Sep-2008
+Bug fixes and enhancements by Ingo Karkat.
+- Added <Plug>MarkAllClear (without a default mapping), which clears all
+  marks, even when the cursor is on a mark.
+- Added <Plug>... mappings for hard-coded \*, \#, \/, \?, * and #, to allow
+  re-mapping and disabling. Beforehand, there were some <Plug>... mappings
+  and hard-coded ones; now, everything can be customized.
+- BF: Using :autocmd without <bang> to avoid removing _all_ autocmds for the
+  BufWinEnter event. (Using a custom :augroup would be even better.)
+- BF: Explicitly defining s:current_mark_position; some execution paths left
+  it undefined, causing errors.
+- ENH: Make the match according to the 'ignorecase' setting, like the star
+  command.
+- ENH: The jumps to the next/prev occurrence now print 'search hit BOTTOM,
+  continuing at TOP" and "Pattern not found:..." messages, like the * and n/N
+  Vim search commands.
+- ENH: Jumps now open folds if the occurrence is inside a closed fold, just
+  like n/N do.
+
+1.1.8-g	25-Apr-2008
+Last version published by Yuheng Xie on vim.org.
+
+1.1.2	22-Mar-2005
+Initial version published by Yuheng Xie on vim.org.
+
+==============================================================================
+Copyright: (C) 2005-2008 Yuheng Xie
+           (C) 2008-2012 Ingo Karkat
+The VIM LICENSE applies to this script; see|copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:

@@ -1,0 +1,2 @@
+markdown-1.2.2.vba: call delete('/home/ma6174/.vim/ftdetect/markdown.vim')|call delete('/home/ma6174/.vim/snippets/markdown.snippets')|call delete('/home/ma6174/.vim/syntax/markdown.vim')
+mark.vba: call delete('/home/ma6174/.vim/autoload/mark.vim')|call delete('/home/ma6174/.vim/autoload/mark/palettes.vim')|call delete('/home/ma6174/.vim/plugin/mark.vim')|call delete('/home/ma6174/.vim/doc/mark.txt')
