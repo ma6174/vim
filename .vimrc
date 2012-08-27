@@ -1,11 +1,14 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set cul "高亮光标所在行
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set go=             " 不要图形按钮  
-"color asmanian2     " 设置背景主题  
+"color desert     " 设置背景主题  
+color ron     " 设置背景主题  
+"color torte     " 设置背景主题  
 "set guifont=Courier_New:h10:cANSI   " 设置字体  
-autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
+"autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
 autocmd InsertEnter * se cul    " 用浅色高亮当前行  
 set ruler           " 显示标尺  
 set showcmd         " 输入的命令显示出来，看的清楚些  
@@ -14,7 +17,7 @@ set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
 "set foldenable      " 允许折叠  
-set foldmethod=manual   " 手动折叠  
+"set foldmethod=manual   " 手动折叠  
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 显示中文帮助
 if version >= 603
@@ -121,6 +124,8 @@ endfunc
 "键盘命令
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :nmap <silent> <F9> <ESC>:Tlist<RETURN>
+map! <C-Z> <Esc>zzi
+map! <C-O> <C-Y>,
 map <C-A> ggVGY
 map! <C-A> <Esc>ggVGY
 map <F12> gg=G
@@ -134,6 +139,7 @@ nnoremap <C-F2> :vert diffsplit
 map <F3> :tabnew .<CR>  
 "打开树状文件目录  
 map <C-F3> \be  
+:autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -150,7 +156,9 @@ func! CompileRunGcc()
 	elseif &filetype == 'sh'
 		:!./%
 	elseif &filetype == 'python'
-		exec "!python %"
+		exec "!python2.7 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
     elseif &filetype == 'mkd'
 "        exec "!touch ~/temp.html"
 "        exec "!perl ~/.vim/markdown.pl % > /tmp/temp.html<"<CR>
@@ -244,21 +252,21 @@ set smartindent
 " 高亮显示普通txt文件（需要txt.vim脚本）
 au BufRead,BufNewFile *  setfiletype txt
 "自动补全
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
+"":inoremap ( ()<ESC>i
+"":inoremap ) <c-r>=ClosePair(')')<CR>
 ":inoremap { {<CR>}<ESC>O
 ":inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-function! ClosePair(char)
-	if getline('.')[col('.') - 1] == a:char
-		return "\<Right>"
-	else
-		return a:char
-	endif
-endfunction
+"":inoremap [ []<ESC>i
+"":inoremap ] <c-r>=ClosePair(']')<CR>
+"":inoremap " ""<ESC>i
+"":inoremap ' ''<ESC>i
+""function! ClosePair(char)
+""	if getline('.')[col('.') - 1] == a:char
+""		return "\<Right>"
+""	else
+""		return a:char
+""	endif
+""endfunction
 filetype plugin indent on 
 "打开文件类型检测, 加了这句才可以用智能补全
 set completeopt=longest,menu
@@ -317,9 +325,10 @@ let g:miniBufExplModSelTarget = 1
 
 "输入法
 :let g:vimim_map='c-/'
-:let g:vimim_cloud='qq' " QQ云输入
+":let g:vimim_cloud='sougou' " QQ云输入
 :let g:vimim_punctuation=0	" 不用中文标点
 :set pastetoggle=<C-H>
+:let g:vimim_cloud=-1
 
 
 "python补全

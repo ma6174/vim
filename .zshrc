@@ -232,7 +232,7 @@ bindkey "\e\e" sudo-command-line
 #命令别名 {{{
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm -i'
+alias rm='rm -i -f'
 alias ls='ls -F --color=auto'
 alias ll='ls -al'
 alias grep='grep --color=auto'
@@ -243,6 +243,9 @@ alias p3='python3'
 alias y='yaourt'
 alias h='htop'
 alias vim='sudo vim'
+alias sshacm='ssh acmxs@210.44.176.195'
+alias sshsys='ssh ma6174@211.64.20.43 -X'
+alias l='ls'
  
 #[Esc][h] man 当前命令时，显示简短说明
 alias run-help >&/dev/null && unalias run-help
@@ -254,10 +257,9 @@ alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
  
 #路径别名 {{{
 #进入相应的路径时只要 cd ~xxx
-hash -d A="/media/ayu/dearest"
-hash -d H="/media/data/backup/ayu"
 hash -d E="/etc/"
-hash -d D="/home/ayumi/Documents"
+hash -d y='/home/yunio/'
+hash -d p='/home/ma6174/yunio/program'
 #}}}
  
 ##for Emacs {{{
