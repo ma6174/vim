@@ -5,6 +5,17 @@
 * vim插件
 * zsh配置文件
 
+## 使用方法：
+1. 安装ctags：`sudo apt-get install ctags`
+- clone配置文件：`cd ~/ && git clone git://github.com/ma6174/vim.git`
+- `mv ~/vim ~/.vim`
+- `mv ~/.vim/.vimrc ~/`
+
+## 2013年3月17日更新：
+1. 增加go语言插件
+- 增加bundle支持
+- 修复小bug
+
 ##2012年7月28日更新：
 1. 增加vimim输入法
 * 增加多个pyhon插件,目前支持编码检测,自动增加文件头,自动补全,错误检测,一键执行python脚本

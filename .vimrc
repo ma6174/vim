@@ -1,4 +1,7 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"golang
+"
+set rtp+=$GOROOT/misc/vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set cul "高亮光标所在行
@@ -17,7 +20,7 @@ set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
 "set foldenable      " 允许折叠  
-"set foldmethod=manual   " 手动折叠  
+""set foldmethod=manual   " 手动折叠  
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 显示中文帮助
 if version >= 603
@@ -62,6 +65,7 @@ set iskeyword+=_,$,@,%,#,-
 
 "markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+au BufRead,BufNewFile *.{go}   set filetype=go
 "rkdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
@@ -126,11 +130,16 @@ endfunc
 :nmap <silent> <F9> <ESC>:Tlist<RETURN>
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
-map <C-A> ggVGY
-map! <C-A> <Esc>ggVGY
+map <C-A> ggVG$"+y
 map <F12> gg=G
 " 选中状态下 Ctrl+c 复制
+map <C-v> "*pa
+imap <C-v> <Esc>"*pa
+imap <C-a> <Esc>^
+imap <C-e> <Esc>$
 vmap <C-c> "+y
+set mouse=v
+"set clipboard=unnamed
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
 "比较文件  
@@ -146,19 +155,22 @@ func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
 		exec "!g++ % -o %<"
-		exec "! ./%<"
+		exec "!time ./%<"
 	elseif &filetype == 'cpp'
 		exec "!g++ % -o %<"
-		exec "! ./%<"
+		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
-		exec "!java %<"
+		exec "!time java %<"
 	elseif &filetype == 'sh'
-		:!./%
+		:!time bash %
 	elseif &filetype == 'python'
-		exec "!python2.7 %"
+		exec "!time python2.7 %"
     elseif &filetype == 'html'
         exec "!firefox % &"
+    elseif &filetype == 'go'
+"        exec "!go build %<"
+        exec "!time go run %"
     elseif &filetype == 'mkd'
 "        exec "!touch ~/temp.html"
 "        exec "!perl ~/.vim/markdown.pl % > /tmp/temp.html<"<CR>
@@ -208,9 +220,9 @@ set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
-set foldcolumn=0
-set foldmethod=indent 
-set foldlevel=3 
+""set foldcolumn=0
+""set foldmethod=indent 
+""set foldlevel=3 
 " 不要使用vi的键盘模式，而是vim自己的
 set nocompatible
 " 去掉输入错误的提示声音
@@ -249,8 +261,6 @@ set matchtime=1
 set scrolloff=3
 " 为C程序提供自动缩进
 set smartindent
-" 高亮显示普通txt文件（需要txt.vim脚本）
-au BufRead,BufNewFile *  setfiletype txt
 "自动补全
 "":inoremap ( ()<ESC>i
 "":inoremap ) <c-r>=ClosePair(')')<CR>
@@ -277,8 +287,8 @@ let Tlist_Sort_Type = "name"    " 按照名称排序
 let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
 let Tlist_Compart_Format = 1    " 压缩方式  
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
-let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
-let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
+""let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
+""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
 "let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
 "设置tags  
 "set tags=tags  
@@ -356,3 +366,45 @@ let &termencoding=&encoding
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 
+"set nocompatible               " be iMproved
+"filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"ndle 'tpope/vim-rails.git'
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'Auto-Pairs'
+Bundle 'python-imports.vim'
+Bundle 'CaptureClipboard'
+Bundle 'ctrlp-modified.vim'
+Bundle 'last_edit_marker.vim'
+"Bundle 'Python-mode-klen'
+Bundle 'SQLComplete.vim'
+"Bundle 'djangojump'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
