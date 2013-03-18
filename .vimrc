@@ -118,8 +118,8 @@ func SetTitle()
 "		call append(line(".")+7,"")
 "	endif
 	"新建文件后，自动定位到文件末尾
-	autocmd BufNewFile * normal G
 endfunc 
+autocmd BufNewFile * normal G
 
 
 
