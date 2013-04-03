@@ -6,8 +6,11 @@
 * zsh配置文件
 
 ## 使用方法：
-1. 安装ctags：`sudo apt-get install ctags`
+1. 安装vim `sudo apt-get install vim`
+- 安装ctags：`sudo apt-get install ctags`
+- `sudo ln -s /usr/bin/ctags /usr/local/bin/ctags`
 - clone配置文件：`cd ~/ && git clone git://github.com/ma6174/vim.git`
+<<<<<<< HEAD
 - `mv ~/vim ~/.vim`
 - `mv ~/.vim/.vimrc ~/`
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
@@ -16,6 +19,15 @@
 ## 2013年4月3日更新
 
 1. 完善安装方法，修复bundle问题
+=======
+- `cp ~/vim ~/.vim`
+- `cp ~/.vim/.vimrc ~/`
+
+## 2013年3月22日更新：
+
+1. 修复bundle插件问题
+-  修复ctags问题
+>>>>>>> 41ec9d0a9278c1a6dfa63e625e844a9a07584cfe
 
 ## 2013年3月17日更新：
 1. 增加go语言插件
