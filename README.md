@@ -10,6 +10,12 @@
 - clone配置文件：`cd ~/ && git clone git://github.com/ma6174/vim.git`
 - `mv ~/vim ~/.vim`
 - `mv ~/.vim/.vimrc ~/`
+- clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
+- 执行bundle程序`:BundleInstall`
+
+## 2013年4月3日更新
+
+1. 完善安装方法，修复bundle问题
 
 ## 2013年3月17日更新：
 1. 增加go语言插件

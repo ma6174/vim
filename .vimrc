@@ -324,15 +324,6 @@ let g:miniBufExplModSelTarget = 1
 
 
 
-
-
-
-
-
-
-
-
-
 "输入法
 :let g:vimim_map='c-/'
 ":let g:vimim_cloud='sougou' " QQ云输入
@@ -351,8 +342,6 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
 
-
-
 set iskeyword+=.
 set fileencodings=utf-8
 set termencoding=utf-8
@@ -361,10 +350,7 @@ set fileencoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 let &termencoding=&encoding
 
-
-
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-
 
 "set nocompatible               " be iMproved
 "filetype off                   " required!
