@@ -13,7 +13,7 @@
 - `mv ~/vim ~/.vim`
 - `mv ~/.vim/.vimrc ~/`
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
-- 执行bundle程序`:BundleInstall`
+- 打开vim并执行bundle程序`:BundleInstall`
 
 ## 2013年4月3日更新
 
