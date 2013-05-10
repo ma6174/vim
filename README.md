@@ -15,6 +15,12 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年5月10日更新
+
+- 修复关闭html一直提示"Processing... % (ctrl+c to stop)bug
+- 修改zencoding快捷键，`ctrl+k`展开
+- 增加javascript插件
+
 ## 2013年4月3日更新
 
 1. 完善安装方法，修复bundle问题

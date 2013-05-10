@@ -12,7 +12,7 @@ FINISH="%{$terminfo[sgr0]%}"
  
 #命令提示符
 RPROMPT=$(echo "$RED%D %T$FINISH")
-PROMPT=$(echo "~~$GREEN%/$_YELLOW>>$FINISH ")
+PROMPT=$(echo "@$GREEN%/$_YELLOW\$ $FINISH")
 
 #RPROMPT=$(echo "$RED%D %T$FINISH")
 #PROMPT=$(echo "$CYAN%n@$YELLOW%M:$GREEN%/$_YELLOW>$FINISH ")
@@ -26,7 +26,11 @@ preexec () { print -Pn "\e]0;%n@%M//%/\ $1\a" }
 ;;
 esac
 #}}}
- 
+
+#python startup
+export PYTHONSTARTUP="/home/ma6174/.pythonstartup"
+
+#current path-directories
 #编辑器
 export EDITOR=vim
 #输入法
@@ -244,8 +248,21 @@ alias y='yaourt'
 alias h='htop'
 alias vim='sudo vim'
 alias sshacm='ssh acmxs@210.44.176.195'
+alias sshdb='ssh db@210.44.176.195 -p 23'
 alias sshsys='ssh ma6174@211.64.20.43 -X'
+alias fqr="ssh -TfnN -D 7071 512c1f5d500446d56a00009c@py-ma6174.rhcloud.com"
+alias fq='ssh -TfnN -D 7070 -p 3843 winston@27.120.120.5'
 alias l='ls'
+alias b='bpython'
+alias pi='ssh pi@192.168.1.106'
+alias sl='sl -e'
+alias fileftp='python -m SimpleHTTPServer'
+alias r='ranger'
+alias i='sudo apt-get install -y'
+alias gita='git add . && git commit -a'
+alias t='tmux'
+alias ta='tmux a -t 0'
+alias news="newsbeuter"
  
 #[Esc][h] man 当前命令时，显示简短说明
 alias run-help >&/dev/null && unalias run-help
@@ -339,3 +356,4 @@ check-cmd-self-insert() { zle .self-insert && recolor-cmd }
  
  zle -N self-insert check-cmd-self-insert
  zle -N backward-delete-char check-cmd-backward-delete-char
+export PATH=$HOME/.cabal/bin:$PATH

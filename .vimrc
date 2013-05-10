@@ -1,5 +1,6 @@
 "golang
-"
+"Processing... % (ctrl+c to stop)
+let g:fencview_autodetect=0
 set rtp+=$GOROOT/misc/vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
@@ -70,6 +71,9 @@ au BufRead,BufNewFile *.{go}   set filetype=go
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
 
+"将tab替换为空格
+nmap tt :%s/\t/    /g<CR>
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -132,8 +136,9 @@ map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 map <F12> gg=G
+imap <C-k> <C-y>,
 " 选中状态下 Ctrl+c 复制
-map <C-v> "*pa
+"map <C-v> "*pa
 imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
