@@ -375,6 +375,8 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'Yggdroot/indentLine'
+let g:indentLine_char = '|'
 "ndle 'tpope/vim-rails.git'
 " vim-scripts repos
 Bundle 'L9'
