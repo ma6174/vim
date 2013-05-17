@@ -6,6 +6,7 @@ set rtp+=$GOROOT/misc/vim
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set cul "高亮光标所在行
+set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set go=             " 不要图形按钮  
 "color desert     " 设置背景主题  
@@ -80,7 +81,7 @@ nmap tt :%s/\t/    /g<CR>
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.md exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
@@ -97,8 +98,8 @@ func SetTitle()
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"#coding=utf-8")
 		call append(line(".")+1, "") 
-    elseif &filetype == 'mkd'
-        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+"    elseif &filetype == 'mkd'
+"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%")) 
@@ -136,7 +137,9 @@ map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 map <F12> gg=G
+map <C-w> <C-w>w
 imap <C-k> <C-y>,
+imap <C-j> <ESC>
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
 imap <C-v> <Esc>"*pa
@@ -313,7 +316,7 @@ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill�
 "其他东东
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "默认打开Taglist 
-let Tlist_Auto_Open=1 
+let Tlist_Auto_Open=0 
 """""""""""""""""""""""""""""" 
 " Tag list (ctags) 
 """""""""""""""""""""""""""""""" 
