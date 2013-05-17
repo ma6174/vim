@@ -15,6 +15,12 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年5月17日更新
+
+- 增加高亮显示列功能
+- 增加缩进自动提示功能(indentLine)
+- 默认关闭taglist
+
 ## 2013年5月10日更新
 
 - 修复关闭html一直提示"Processing... % (ctrl+c to stop)bug
