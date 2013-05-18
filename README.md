@@ -15,6 +15,14 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年5月18日更新
+
+- 增加代码格式优化功能
+- 按`F6`可以格式化`C/C++/python/perl/java/jsp/xml/`代码
+- 需要安装以下软件：
+    - `sudo easy_install -ZU autopep8`
+    - `sudo apt-get install astyle`
+
 ## 2013年5月17日更新
 
 - 增加高亮显示列功能
