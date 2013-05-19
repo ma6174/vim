@@ -217,6 +217,8 @@ func FormartSrc()
         exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'xml'
         exec "!astyle --style=gnu --suffix=none %"
+    else
+        exec "normal gg=G"
     endif
     exec "e! %"
 endfunc
