@@ -417,6 +417,7 @@ Bundle 'ctrlp-modified.vim'
 Bundle 'last_edit_marker.vim'
 "Bundle 'Python-mode-klen'
 Bundle 'SQLComplete.vim'
+"Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
 " ...
 

@@ -1,0 +1,63 @@
+*CoVim.txt*   Collaborative Editing for Vim
+*covim*
+
+
+                           ___           _            ~
+                       _  / __\___/\   /(_)_ __ ___   ~
+                      (_)/ /  / _ \ \ / / | '_ ` _ \  ~
+                       _/ /__| (_) \ V /| | | | | | | ~
+                      (_)____/\___/ \_/ |_|_| |_| |_| ~
+ 
+                              Reference Manual~
+
+==============================================================================
+CONTENTS                                                      *covim-contents*
+
+    1.Intro...................................|covim-intro|
+    1.Usage...................................|covim-usage|
+    1.About...................................|covim-about|
+    1.License.................................|covim-license|
+
+==============================================================================
+INTRO                                                            *covim-intro*
+
+CoVim provides an easy way to add people to your Vim session for real-time 
+collaboration. Once connected, other users will show up in your Vim client 
+with their own cursors, able to move around and edit anywhere in the document.
+
+Demo:
+https://github.com/FredKSchott/CoVim
+
+
+==============================================================================
+USAGE                                                            *covim-usage*
+
+To start a new CoVim server:
+  :CoVim start [port] [name] 
+  (or, start a CoVim server from the command line: ./server.py [port])
+
+To connect to a running server:
+  :CoVim connect [host address / 'localhost'] [port] [name]
+
+To disconnect:
+  :CoVim disconnect
+  (CoVim automatically disconnects on quit)
+
+
+==============================================================================
+ABOUT                                                            *covim-about*
+
+CoVim is currently maintained by the handsome:
+    Fred K. Schott (github: fredkschott)
+
+Find the latest version of CoVim here:
+    https://github.com/FredKSchott/CoVim
+
+
+==============================================================================
+LICENCE                                                        *covim-licence*
+
+CoVim is licensed under MIT License. See LICENSE file for full license.
+
+
+ vim:tw=78:sw=4:ft=help:norl:

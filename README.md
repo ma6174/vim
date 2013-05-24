@@ -15,6 +15,14 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年5月24日更新
+
+- 增加covim团队协作工具
+- 需要安装：`pip install twisted`
+- 开启方法：`:CoVim start [port] [name] `
+- 连接服务器：`:CoVim connect [host address / 'localhost'] [port] [name]`
+- 退出：`Quit Vim` or `:CoVim disconnect`
+
 ## 2013年5月18日更新
 
 - 增加代码格式优化功能
