@@ -15,6 +15,13 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年5月26日更新
+
+- 完善NERDTree的用法：
+    - 打开vim时不加文件名自动打开NERDTree
+    - 关闭文件时没有其他文件自动退出NERDTree
+    - `<F3>`可以快速打开和关闭vim
+
 ## 2013年5月24日更新
 
 - 增加covim团队协作工具

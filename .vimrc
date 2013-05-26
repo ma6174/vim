@@ -153,7 +153,7 @@ nnoremap <F2> :g/^\s*$/d<CR>
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
 "列出当前目录文件  
-map <F3> :tabnew .<CR>  
+map <F3> :NERDTree .<CR>  
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
@@ -237,6 +237,10 @@ if has("autocmd")
           \   exe "normal g`\"" |
           \ endif
 endif
+"当打开vim且没有文件时自动打开NERDTree
+autocmd vimenter * if !argc() | NERDTree | endif
+" 只剩 NERDTree时自动关闭
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " 设置当文件被改动时自动载入
 set autoread
@@ -349,6 +353,7 @@ let Tlist_Auto_Open=0
 """""""""""""""""""""""""""""""" 
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags' 
 let Tlist_Show_One_File = 1 "不同时显示多个文件的tag，只显示当前文件的 
+let Tlist_File_Fold_Auto_Close = 1
 let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
 let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
 " minibufexpl插件的一般设置
@@ -356,6 +361,7 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1  
+nmap tl :Tlist<cr>
 
 
 
