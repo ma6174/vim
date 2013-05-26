@@ -1,3 +1,7 @@
+"syntastic相关
+execute pathogen#infect()
+let g:syntastic_python_checkers=['pylint']
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 "golang
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
