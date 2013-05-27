@@ -100,7 +100,7 @@ func SetTitle()
 		call append(line(".")+6, "") 
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"#coding=utf-8")
+        call append(line("."),"# coding=utf-8")
 		call append(line(".")+1, "") 
 "    elseif &filetype == 'mkd'
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
@@ -157,7 +157,7 @@ nnoremap <F2> :g/^\s*$/d<CR>
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
 "列出当前目录文件  
-map <F3> :NERDTree .<CR>  
+map <F3> :NERDTree<CR>  
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
@@ -202,13 +202,13 @@ endfunc
 
 "代码格式优化化
 
-map <F6> :call FormartSrc()<CR>
+map <F6> :call FormartSrc()<CR><CR>
 
 "定义FormartSrc()
 func FormartSrc()
     exec "w"
     if &filetype == 'c'
-        exec "!astyle --style=ansi --one-line=keep-statements -a --suffix=none %"
+        exec "!astyle --style=ansi -a --suffix=none %"
     elseif &filetype == 'cpp' || &filetype == 'hpp'
         exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
     elseif &filetype == 'perl'

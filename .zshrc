@@ -61,22 +61,22 @@ setopt PUSHD_IGNORE_DUPS
 #}}}
  
 #每个目录使用独立的历史纪录{{{
-cd() {
-builtin cd "$@"                             # do actual cd
-fc -W                                       # write current history  file
-local HISTDIR="$HOME/.zsh_history$PWD"      # use nested folders for history
-if  [ ! -d "$HISTDIR" ] ; then          # create folder if needed
-mkdir -p "$HISTDIR"
-fi
-export HISTFILE="$HISTDIR/zhistory"     # set new history file
-touch $HISTFILE
-local ohistsize=$HISTSIZE
-HISTSIZE=0                              # Discard previous dir's history
-HISTSIZE=$ohistsize                     # Prepare for new dir's history
-fc -R                                       #read from current histfile
-}
-mkdir -p $HOME/.zsh_history$PWD
-export HISTFILE="$HOME/.zsh_history$PWD/zhistory"
+# cd() {
+# builtin cd "$@"                             # do actual cd
+# fc -W                                       # write current history  file
+# local HISTDIR="$HOME/.zsh_history$PWD"      # use nested folders for history
+# if  [ ! -d "$HISTDIR" ] ; then          # create folder if needed
+# mkdir -p "$HISTDIR"
+# fi
+# export HISTFILE="$HISTDIR/zhistory"     # set new history file
+# touch $HISTFILE
+# local ohistsize=$HISTSIZE
+# HISTSIZE=0                              # Discard previous dir's history
+# HISTSIZE=$ohistsize                     # Prepare for new dir's history
+# fc -R                                       #read from current histfile
+# }
+# mkdir -p $HOME/.zsh_history$PWD
+# export HISTFILE="/home/ma6174/.zhistory"
  
 function allhistory { cat $(find $HOME/.zsh_history -name zhistory) }
 function convhistory {
