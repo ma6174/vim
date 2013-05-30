@@ -1,3 +1,15 @@
+set sw=4
+set ts=4
+set et
+set smarttab
+set lbr
+set fo+=mB
+set sm
+set selection=inclusive
+set wildmenu
+set mousemodel=popup
+
+"
 "syntastic相关
 execute pathogen#infect()
 let g:syntastic_python_checkers=['pylint']

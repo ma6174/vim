@@ -1,19 +1,32 @@
-<head><meta charset="utf-8"></head>
 #我的vim配置
+
 ##内容：
+
 * vim的配置文件
 * vim插件
 * zsh配置文件
 
-## 使用方法：
+## 简易安装方法：
+
+`wget https://raw.github.com/ma6174/vim/master/setup.sh && bash setup.sh`
+
+## 或者自己安装：(以ubuntu为例)
+
 1. 安装vim `sudo apt-get install vim`
 - 安装ctags：`sudo apt-get install ctags`
+- 安装一些必备程序：`sudo apt-get install python-twisted xclip vim-gnome astyle python-setuptools`
+- python代码格式化工具：`sudo easy_install -ZU autopep8`
 - `sudo ln -s /usr/bin/ctags /usr/local/bin/ctags`
 - clone配置文件：`cd ~/ && git clone git://github.com/ma6174/vim.git`
 - `mv ~/vim ~/.vim`
 - `mv ~/.vim/.vimrc ~/`
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
+
+## 2013年5月30日更新
+
+- 为方便大家安装，特地写了`setup.sh`脚本，可以通过下面的命令一键安装：
+    - `wget https://raw.github.com/ma6174/vim/master/setup.sh && bash setup.sh`
 
 ## 2013年5月26日更新
 
@@ -26,7 +39,6 @@
 ## 2013年5月24日更新
 
 - 增加covim团队协作工具
-- 需要安装：`pip install twisted`
 - 开启方法：`:CoVim start [port] [name] `
 - 连接服务器：`:CoVim connect [host address / 'localhost'] [port] [name]`
 - 退出：`Quit Vim` or `:CoVim disconnect`
@@ -35,9 +47,6 @@
 
 - 增加代码格式优化功能
 - 按`F6`可以格式化`C/C++/python/perl/java/jsp/xml/`代码
-- 需要安装以下软件：
-    - `sudo easy_install -ZU autopep8`
-    - `sudo apt-get install astyle`
 
 ## 2013年5月17日更新
 
