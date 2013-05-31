@@ -1,7 +1,7 @@
 " Vim color file
 " Maintainer: David Ne\v{c}as (Yeti) <yeti@physics.muni.cz>
-" Last Change: 2003-04-23
-" URL: http://trific.ath.cx/Ftp/vim/colors/peachpuff.vim
+" Last Change: 2001 May 21
+" URI: http://physics.muni.cz/~yeti/download/peachpuff.vim
 
 " This color scheme uses a peachpuff background (what you've expected when it's
 " called peachpuff?).
@@ -57,4 +57,3 @@ hi Type term=underline ctermfg=2 gui=bold guifg=SeaGreen
 hi Ignore cterm=bold ctermfg=7 guifg=bg
 hi Error term=reverse cterm=bold ctermfg=7 ctermbg=1 gui=bold guifg=White guibg=Red
 hi Todo term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
-
