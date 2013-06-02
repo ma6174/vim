@@ -12,7 +12,7 @@
 
 ## 简易安装方法：
 
-`wget https://raw.github.com/ma6174/vim/master/setup.sh && bash setup.sh`
+`wget https://raw.github.com/ma6174/vim/master/setup.sh -O ma6174_vim_setup.sh && bash ma6174_vim_setup.sh`
 
 ## 或者自己安装：(以ubuntu为例)
 
