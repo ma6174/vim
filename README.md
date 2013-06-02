@@ -27,6 +27,13 @@
 - clone bundle 程序：`git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
 - 打开vim并执行bundle程序`:BundleInstall`
 
+## 2013年6月2日tip
+
+- 编写markdown文件(`*.md`)的时候，在normal模式下按 `md` 即可在当前目录下生成相应的`html`文件
+- 生成之后还是在normal模式按`fi`可以使用firefox打开相应的`html`文件预览
+- 当然也可以使用万能的`F5`键来一键转换并打开预览
+- 如果打开过程中屏幕出现一些混乱信息，可以按`Ctrl + l`来恢复
+
 ## 2013年5月31日更新
 
 - 增加400多种主题，可以在[colors](colors)目录中找到

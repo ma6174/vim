@@ -196,11 +196,8 @@ func! CompileRunGcc()
 "        exec "!go build %<"
         exec "!time go run %"
     elseif &filetype == 'mkd'
-"        exec "!touch ~/temp.html"
-"        exec "!perl ~/.vim/markdown.pl % > /tmp/temp.html<"<CR>
-"        exec "!markdown % > /tmp/temp.html<"<CR>
-"        exec "md"
-        exec "!firefox /tmp/markdown.html &"
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
 	endif
 endfunc
 "C,C++的调试
