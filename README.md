@@ -2,9 +2,13 @@
 
 ##内容：
 
-* vim的配置文件
+* vim配置文件
 * vim插件
 * zsh配置文件
+
+## 运行截图
+
+![screenshot.png](screenshot.png)
 
 ## 简易安装方法：
 
