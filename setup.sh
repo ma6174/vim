@@ -4,7 +4,7 @@ sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools
 sudo easy_install -ZU autopep8 twisted
 sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
 mv ~/vim ~/vim_old -f
-cd ~/ && git clone git://github.com/ma6174/vim.git
+cd ~/ && git clone https://github.com/ma6174/vim.git
 mv ~/.vim ~/.vim_old -f
 mv ~/vim ~/.vim -f
 mv ~/.vim/.vimrc ~/ -f
