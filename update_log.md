@@ -4,6 +4,7 @@
 
 - 增加javascript插件
 - 增加常见的dict
+- 完善`<F6>`对javascript的支持
 
 ### 2013年5月31日更新
 

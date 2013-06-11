@@ -2,6 +2,7 @@ set sw=4
 set ts=4
 set et
 set smarttab
+set smartindent
 set lbr
 set fo+=mB
 set sm
@@ -91,6 +92,7 @@ set iskeyword+=_,$,@,%,#,-
 "markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
+au BufRead,BufNewFile *.{js}   set filetype=javascript
 "rkdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
@@ -231,6 +233,7 @@ func FormartSrc()
         exec "!astyle --style=gnu --suffix=none %"
     else
         exec "normal gg=G"
+        return
     endif
     exec "e! %"
 endfunc
@@ -311,7 +314,6 @@ set matchtime=1
 " 光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
 " 为C程序提供自动缩进
-set smartindent
 "自动补全
 "":inoremap ( ()<ESC>i
 "":inoremap ) <c-r>=ClosePair(')')<CR>
@@ -440,9 +442,15 @@ Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
 Bundle 'JavaScript-Indent'
 Bundle 'Better-Javascript-Indentation'
 Bundle 'jslint.vim'
+Bundle "pangloss/vim-javascript"
+Bundle 'Vim-Script-Updater'
+Bundle 'jsbeautify'
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
 " ...
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
 
 filetype plugin indent on     " required!
 "
