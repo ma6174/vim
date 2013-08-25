@@ -1,6 +1,10 @@
 #!/bin/bash
 echo "安装将花费一定时间，请耐心等待直到安装完成^_^"
-sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools
+if which apt-get >/dev/null; then
+	sudo apt-get install -y vim vim-gnome ctags xclip astyle python-setuptools
+else
+	sudo yum install -y vim ctags.i686 xclip astyle python-setuptools	
+fi
 sudo easy_install -ZU autopep8 twisted
 sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
 mv ~/vim ~/vim_old -f
