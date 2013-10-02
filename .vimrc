@@ -16,6 +16,8 @@ au FileType c setlocal dict+=~/.vim/dict/c.dict
 au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
 au FileType scale setlocal dict+=~/.vim/dict/scale.dict
 au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/css.dict
 
 "
 "syntastic相关
@@ -62,7 +64,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 " 不要用空格代替制表符
-set noexpandtab
+set expandtab
 " 在行和段开始处使用制表符
 set smarttab
 " 显示行号
@@ -96,6 +98,8 @@ au BufRead,BufNewFile *.{js}   set filetype=javascript
 "rkdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
+nmap \ \cc
+vmap \ \cc
 
 "将tab替换为空格
 nmap tt :%s/\t/    /g<CR>
@@ -169,6 +173,8 @@ set mouse=v
 nnoremap <F2> :g/^\s*$/d<CR> 
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
+"nnoremap <Leader>fu :CtrlPFunky<Cr>
+"nnoremap <C-n> :CtrlPFunky<Cr>
 "列出当前目录文件  
 map <F3> :NERDTree<CR>  
 "打开树状文件目录  
@@ -264,13 +270,13 @@ autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
 "代码补全 
 set completeopt=preview,menu 
 "允许插件  
-filetype plugin on
+"filetype plugin on
 "共享剪贴板  
 "set clipboard+=unnamed 
 "自动保存
 set autowrite
-set ruler                   " 打开状态栏标尺
-set cursorline              " 突出显示当前行
+"set ruler                   " 打开状态栏标尺
+"set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
@@ -398,12 +404,9 @@ let g:miniBufExplModSelTarget = 1
 
 
 set iskeyword+=.
-set fileencodings=utf-8
 set termencoding=utf-8
 set encoding=utf8
-set fileencoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
-let &termencoding=&encoding
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
@@ -439,12 +442,19 @@ Bundle 'synmark.vim'
 "Bundle 'Python-mode-klen'
 Bundle 'SQLComplete.vim'
 Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
-Bundle 'JavaScript-Indent'
-Bundle 'Better-Javascript-Indentation'
+"Bundle 'JavaScript-Indent'
+"Bundle 'Better-Javascript-Indentation'
 Bundle 'jslint.vim'
 Bundle "pangloss/vim-javascript"
 Bundle 'Vim-Script-Updater'
+Bundle 'ctrlp.vim'
+Bundle 'tacahiroy/ctrlp-funky'
 Bundle 'jsbeautify'
+Bundle 'The-NERD-Commenter'
+"django
+Bundle 'django_templates.vim'
+Bundle 'Django-Projects'
+
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
 " ...
@@ -462,3 +472,15 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
+"
+"
+"ctrlp设置
+"
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,*.png,*.jpg,*.gif  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
+let g:ctrlp_extensions = ['funky']
+
+let NERDTreeIgnore=['\.pyc']
