@@ -177,7 +177,8 @@ nnoremap <C-F2> :vert diffsplit
 "nnoremap <Leader>fu :CtrlPFunky<Cr>
 "nnoremap <C-n> :CtrlPFunky<Cr>
 "列出当前目录文件  
-map <F3> :NERDTree<CR>  
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC> :NERDTreeToggle<CR>
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
