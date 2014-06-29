@@ -20,6 +20,7 @@ mv -f ~/vim ~/vim_old
 cd ~/ && git clone https://github.com/ma6174/vim.git
 mv -f ~/.vim ~/.vim_old
 mv -f ~/vim ~/.vim
+mv -f ~/.vimrc ~/.vimrc_old
 mv -f ~/.vim/.vimrc ~/
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 echo "ma6174正在努力为您安装bundle程序" > ma6174
