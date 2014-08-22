@@ -167,6 +167,7 @@ map <C-A> ggVG$"+y
 map <F12> gg=G
 map <C-w> <C-w>w
 imap <C-k> <C-y>,
+imap <C-t> <C-q><TAB>
 imap <C-j> <ESC>
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
