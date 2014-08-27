@@ -1,2 +1,9 @@
+language: go
+
+go:
+  - tip
+
 script:
+  - date
   - bash setup.sh
+  - date
