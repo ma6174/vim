@@ -148,10 +148,10 @@ func SetTitle()
 		call append(line(".")+6, "#include<stdio.h>")
 		call append(line(".")+7, "")
 	endif
-"	if &filetype == 'java'
-"		call append(line(".")+6,"public class ".strpart(expand("%d"),0,strlen(expand("%"))-5))
-"		call append(line(".")+7,"")
-"	endif
+	if &filetype == 'java'
+		call append(line(".")+6,"public class ".strpart(expand("%d"),0,strlen(expand("%"))-5))
+		call append(line(".")+7,"")
+	endif
 	"新建文件后，自动定位到文件末尾
 endfunc 
 autocmd BufNewFile * normal G
