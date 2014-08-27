@@ -4,4 +4,4 @@ python:
 before_script:
   - date
 script:
-  - bash ma6174_vim_setup.sh
+  - bash setup.sh
