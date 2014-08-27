@@ -1,0 +1,7 @@
+language: python
+python:
+  - "2.7"
+before_script:
+  - date
+script:
+  - bash ma6174_vim_setup.sh
