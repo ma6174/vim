@@ -10,7 +10,7 @@
 
 打开终端，执行下面的命令就自动安装好了：
 
-`curl -sSL https://raw.github.com/ma6174/vim/master/setup.sh | sh`
+`wget -qO- https://raw.github.com/ma6174/vim/master/setup.sh | sh`
 
 ### 或者自己手动安装：(以ubuntu为例)
 
