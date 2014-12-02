@@ -263,9 +263,6 @@ endfunc
 "结束定义FormartSrc
 
 
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -371,15 +368,6 @@ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill�
 "set autochdir 
 
 
-
-
-
-
-
-
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "其他东东
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -399,16 +387,6 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1  
 nmap tl :Tlist<cr>
-
-
-
-"输入法
-:let g:vimim_map='c-/'
-":let g:vimim_cloud='sougou' " QQ云输入
-:let g:vimim_punctuation=0	" 不用中文标点
-:set pastetoggle=<C-H>
-:let g:vimim_cloud=-1
-
 
 "python补全
 let g:pydiction_location = '~/.vim/after/complete-dict'
@@ -480,16 +458,6 @@ let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
 filetype plugin indent on     " required!
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
-"
 "
 "ctrlp设置
 "
