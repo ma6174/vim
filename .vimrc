@@ -32,13 +32,13 @@ set rtp+=$GOROOT/misc/vim
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
-set cul "高亮光标所在行
-set cuc
+"set cul "高亮光标所在行
+"set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set go=             " 不要图形按钮  
 "color desert     " 设置背景主题  
-color ron     " 设置背景主题  
-"color torte     " 设置背景主题  
+"color rainbow_breeze     " 设置背景主题  
+color torte     " 设置背景主题  
 "set guifont=Courier_New:h10:cANSI   " 设置字体  
 "autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
 autocmd InsertEnter * se cul    " 用浅色高亮当前行  
@@ -48,8 +48,6 @@ set showcmd         " 输入的命令显示出来，看的清楚些
 set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
-"set foldenable      " 允许折叠  
-""set foldmethod=manual   " 手动折叠  
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 显示中文帮助
 if version >= 603
@@ -60,16 +58,16 @@ endif
 set autoindent
 set cindent
 " Tab键的宽度
-set tabstop=4
-" 统一缩进为4
-set softtabstop=4
+set tabstop=8
+" 统一缩进为8
+set softtabstop=8
 set shiftwidth=4
 " 不要用空格代替制表符
 set expandtab
 " 在行和段开始处使用制表符
 set smarttab
 " 显示行号
-set number
+"set number
 " 历史记录数
 set history=1000
 "搜索逐字符高亮
@@ -108,50 +106,48 @@ nmap tt :%s/\t/    /g<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""新文件标题
+"新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
 autocmd BufNewFile *.cpp,*.c,*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
-	"如果文件类型为.sh文件 
-	if &filetype == 'sh' 
-		call setline(1,"\#!/bin/bash") 
-		call append(line("."), "") 
+    "如果文件类型为.sh文件 
+    if &filetype == 'sh' 
+	call setline(1,"\#!/bin/bash") 
+	call append(line("."), "") 
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
-	    call append(line(".")+1, "") 
-
+	call append(line(".")+1, "") 
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
         call append(line("."),"# encoding: utf-8")
-	    call append(line(".")+1, "")
-
-"    elseif &filetype == 'mkd'
-"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-	else 
-		call setline(1, "/*************************************************************************") 
-		call append(line("."), "	> File Name: ".expand("%")) 
-		call append(line(".")+1, "	> Author: ") 
-		call append(line(".")+2, "	> Mail: ") 
-		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
-		call append(line(".")+4, " ************************************************************************/") 
-		call append(line(".")+5, "")
-	endif
-	if &filetype == 'cpp'
-		call append(line(".")+6, "#include<iostream>")
-		call append(line(".")+7, "using namespace std;")
-		call append(line(".")+8, "")
-	endif
-	if &filetype == 'c'
-		call append(line(".")+6, "#include<stdio.h>")
-		call append(line(".")+7, "")
-	endif
-	if &filetype == 'java'
-		call append(line(".")+6,"public class ".expand("%:r"))
-		call append(line(".")+7,"")
-	endif
+        call append(line(".")+1, "")
+    elseif &filetype == 'mkd'
+        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+    else
+        call setline(1, "/*************************************************************************") 
+        call append(line("."), "	> File Name: ".expand("%")) 
+        call append(line(".")+1, "	> Author: Yanbing Du") 
+        call append(line(".")+2, "	> Mail: yanbing.do@gmail.com") 
+        call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
+        call append(line(".")+4, " ************************************************************************/") 
+        call append(line(".")+5, "")
+    endif
+    if &filetype == 'cpp'
+        call append(line(".")+6, "#include<iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include<stdio.h>")
+        call append(line(".")+7, "")
+    endif
+"	if &filetype == 'java'
+"	call append(line(".")+6,"public class ".expand("%:r"))
+"		call append(line(".")+7,"")
+"	endif
 	"新建文件后，自动定位到文件末尾
 endfunc 
 autocmd BufNewFile * normal G
@@ -165,9 +161,8 @@ map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 map <F12> gg=G
-map <C-w> <C-w>w
+"map <C-w> <C-w>w
 imap <C-k> <C-y>,
-imap <C-t> <C-q><TAB>
 imap <C-j> <ESC>
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
@@ -178,7 +173,7 @@ vmap <C-c> "+y
 set mouse=v
 "set clipboard=unnamed
 "去空行  
-nnoremap <F2> :g/^\s*$/d<CR> 
+"nnoremap <F2> :g/^\s*$/d<CR> 
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
 "nnoremap <Leader>fu :CtrlPFunky<Cr>
@@ -254,10 +249,6 @@ func FormartSrc()
 endfunc
 "结束定义FormartSrc
 
-
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -277,21 +268,33 @@ set autoread
 " quickfix模式
 autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
 "代码补全 
-set completeopt=preview,menu 
+"set completeopt=preview,menu 
 "允许插件  
 "filetype plugin on
 "共享剪贴板  
 "set clipboard+=unnamed 
 "自动保存
 set autowrite
-"set ruler                   " 打开状态栏标尺
+set ruler                   " 打开状态栏标尺
 "set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
-""set foldcolumn=0
-""set foldmethod=indent 
-""set foldlevel=3 
+
+""""""""
+"折叠
+""""""""
+set foldenable
+"set foldcolumn=0
+"set foldmethod=manual   " 手动折叠
+set foldmethod=indent
+"set foldlevel=3
+"set foldclose=all           " 设置为自动关闭折叠
+set foldlevelstart=99       " 打开文件是默认不折叠代码
+":nnoremap <space> za
+" 用空格键来开关折叠
+noremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+
 " 不要使用vi的键盘模式，而是vim自己的
 set nocompatible
 " 去掉输入错误的提示声音
@@ -304,9 +307,6 @@ set noswapfile
 "搜索忽略大小写
 set ignorecase
 
-
-
-
 set linespace=0
 " 增强模式中的命令行自动完成操作
 set wildmenu
@@ -315,7 +315,7 @@ set backspace=2
 " 允许backspace和光标键跨越行边界
 set whichwrap+=<,>,h,l
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
+"set mouse=a
 set selection=exclusive
 set selectmode=mouse,key
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
@@ -352,7 +352,7 @@ set completeopt=longest,menu
 " CTags的设定  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let Tlist_Sort_Type = "name"    " 按照名称排序  
-let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
+let Tlist_Use_Left_Window = 1  " 在右侧显示窗口  
 let Tlist_Compart_Format = 1    " 压缩方式  
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
 ""let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
@@ -362,16 +362,6 @@ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill�
 "set tags=tags  
 "set autochdir 
 
-
-
-
-
-
-
-
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "其他东东
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -380,18 +370,18 @@ let Tlist_Auto_Open=0
 """""""""""""""""""""""""""""" 
 " Tag list (ctags) 
 """""""""""""""""""""""""""""""" 
+:map <F2> :Tlist<CR>
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags' 
 let Tlist_Show_One_File = 1 "不同时显示多个文件的tag，只显示当前文件的 
 let Tlist_File_Fold_Auto_Close = 1
 let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
-let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
+let Tlist_Use_Left_Window = 1 "在左侧窗口中显示taglist窗口
 " minibufexpl插件的一般设置
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1  
 nmap tl :Tlist<cr>
-
 
 
 "输入法
@@ -493,3 +483,17 @@ let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
 let g:ctrlp_extensions = ['funky']
 
 let NERDTreeIgnore=['\.pyc']
+
+"
+"Highligh redundant spaces
+"
+highlight RedundantSpaces ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/
+
+set nocscopeverbose
+
+"from libvirt HACKING
+set cinoptions=(0,:0,l1,t0,L3
+au FileType make setlocal noexpandtab
+au BufRead,BufNewFile *.am setlocal noexpandtab
+match ErrorMsg /\s\+$\| \+\ze\t/
