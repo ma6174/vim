@@ -2,12 +2,22 @@ set sw=4
 set ts=4
 set et
 set smarttab
+set smartindent
 set lbr
 set fo+=mB
 set sm
 set selection=inclusive
 set wildmenu
 set mousemodel=popup
+
+au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
+au FileType css setlocal dict+=~/.vim/dict/css.dict
+au FileType c setlocal dict+=~/.vim/dict/c.dict
+au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
+au FileType scale setlocal dict+=~/.vim/dict/scale.dict
+au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/css.dict
 
 "
 "syntastic相关
@@ -21,6 +31,7 @@ set rtp+=$GOROOT/misc/vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
 set cul "高亮光标所在行
 set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
@@ -54,7 +65,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 " 不要用空格代替制表符
-set noexpandtab
+set expandtab
 " 在行和段开始处使用制表符
 set smarttab
 " 显示行号
@@ -84,9 +95,12 @@ set iskeyword+=_,$,@,%,#,-
 "markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
+au BufRead,BufNewFile *.{js}   set filetype=javascript
 "rkdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
+nmap \ \cc
+vmap \ \cc
 
 "将tab替换为空格
 nmap tt :%s/\t/    /g<CR>
@@ -97,35 +111,35 @@ nmap tt :%s/\t/    /g<CR>
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
 	if &filetype == 'sh' 
-		call setline(1,"\#########################################################################") 
-		call append(line("."), "\# File Name: ".expand("%")) 
-		call append(line(".")+1, "\# Author: ma6174") 
-		call append(line(".")+2, "\# mail: ma6174@163.com") 
-		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\#########################################################################") 
-		call append(line(".")+5, "\#!/bin/bash") 
-		call append(line(".")+6, "") 
+		call setline(1,"\#!/bin/bash") 
+		call append(line("."), "") 
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
-		call append(line(".")+1, "") 
+	    call append(line(".")+1, "") 
+
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+	    call append(line(".")+1, "")
+
 "    elseif &filetype == 'mkd'
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%")) 
-		call append(line(".")+1, "	> Author: ma6174") 
-		call append(line(".")+2, "	> Mail: ma6174@163.com ") 
+		call append(line(".")+1, "	> Author: ") 
+		call append(line(".")+2, "	> Mail: ") 
 		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
 		call append(line(".")+5, "")
 	endif
-	if &filetype == 'cpp'
+	if expand("%:e") == 'cpp'
 		call append(line(".")+6, "#include<iostream>")
 		call append(line(".")+7, "using namespace std;")
 		call append(line(".")+8, "")
@@ -134,27 +148,34 @@ func SetTitle()
 		call append(line(".")+6, "#include<stdio.h>")
 		call append(line(".")+7, "")
 	endif
-"	if &filetype == 'java'
-"		call append(line(".")+6,"public class ".expand("%"))
-"		call append(line(".")+7,"")
-"	endif
+	if expand("%:e") == 'h'
+		call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
+		call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+		call append(line(".")+8, "#endif")
+	endif
+	if &filetype == 'java'
+		call append(line(".")+6,"public class ".expand("%:r"))
+		call append(line(".")+7,"")
+	endif
 	"新建文件后，自动定位到文件末尾
 endfunc 
 autocmd BufNewFile * normal G
-
-
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "键盘命令
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :nmap <silent> <F9> <ESC>:Tlist<RETURN>
+" shift tab pages
+map <S-Left> :tabp<CR>
+map <S-Right> :tabn<CR>
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 map <F12> gg=G
 map <C-w> <C-w>w
 imap <C-k> <C-y>,
+imap <C-t> <C-q><TAB>
 imap <C-j> <ESC>
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
@@ -168,8 +189,11 @@ set mouse=v
 nnoremap <F2> :g/^\s*$/d<CR> 
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
+"nnoremap <Leader>fu :CtrlPFunky<Cr>
+"nnoremap <C-n> :CtrlPFunky<Cr>
 "列出当前目录文件  
-map <F3> :NERDTree<CR>  
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC> :NERDTreeToggle<CR>
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
@@ -232,13 +256,11 @@ func FormartSrc()
         exec "!astyle --style=gnu --suffix=none %"
     else
         exec "normal gg=G"
+        return
     endif
     exec "e! %"
 endfunc
 "结束定义FormartSrc
-
-
-
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -262,13 +284,13 @@ autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
 "代码补全 
 set completeopt=preview,menu 
 "允许插件  
-filetype plugin on
+"filetype plugin on
 "共享剪贴板  
 "set clipboard+=unnamed 
 "自动保存
 set autowrite
-set ruler                   " 打开状态栏标尺
-set cursorline              " 突出显示当前行
+"set ruler                   " 打开状态栏标尺
+"set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
@@ -312,7 +334,6 @@ set matchtime=1
 " 光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
 " 为C程序提供自动缩进
-set smartindent
 "自动补全
 "":inoremap ( ()<ESC>i
 "":inoremap ) <c-r>=ClosePair(')')<CR>
@@ -347,15 +368,6 @@ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill�
 "set autochdir 
 
 
-
-
-
-
-
-
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "其他东东
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -376,16 +388,6 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1  
 nmap tl :Tlist<cr>
 
-
-
-"输入法
-:let g:vimim_map='c-/'
-":let g:vimim_cloud='sougou' " QQ云输入
-:let g:vimim_punctuation=0	" 不用中文标点
-:set pastetoggle=<C-H>
-:let g:vimim_cloud=-1
-
-
 "python补全
 let g:pydiction_location = '~/.vim/after/complete-dict'
 let g:pydiction_menu_height = 20
@@ -397,12 +399,9 @@ let g:miniBufExplModSelTarget = 1
 
 
 set iskeyword+=.
-set fileencodings=utf-8
 set termencoding=utf-8
 set encoding=utf8
-set fileencoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
-let &termencoding=&encoding
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
@@ -428,25 +427,45 @@ let g:indentLine_char = '┊'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'git://github.com/wincent/command-t.git'
 Bundle 'Auto-Pairs'
 Bundle 'python-imports.vim'
 Bundle 'CaptureClipboard'
 Bundle 'ctrlp-modified.vim'
 Bundle 'last_edit_marker.vim'
+Bundle 'synmark.vim'
 "Bundle 'Python-mode-klen'
 Bundle 'SQLComplete.vim'
+Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
+"Bundle 'JavaScript-Indent'
+"Bundle 'Better-Javascript-Indentation'
+Bundle 'jslint.vim'
+Bundle "pangloss/vim-javascript"
+Bundle 'Vim-Script-Updater'
+Bundle 'ctrlp.vim'
+Bundle 'tacahiroy/ctrlp-funky'
+Bundle 'jsbeautify'
+Bundle 'The-NERD-Commenter'
+"django
+Bundle 'django_templates.vim'
+Bundle 'Django-Projects'
+
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
 " ...
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
 
 filetype plugin indent on     " required!
 "
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"ctrlp设置
 "
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,*.png,*.jpg,*.gif  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
+let g:ctrlp_extensions = ['funky']
+
+let NERDTreeIgnore=['\.pyc']
