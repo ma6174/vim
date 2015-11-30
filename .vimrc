@@ -364,8 +364,8 @@ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill�
 ""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
 "let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
 "设置tags  
-"set tags=tags  
-"set autochdir 
+set tags=tags;  
+set autochdir 
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
