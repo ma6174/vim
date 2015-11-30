@@ -5,7 +5,7 @@ os:
 language: python
 
 python:
-  - 2.7
+  - 2.7.5
 
 script:
   - date
