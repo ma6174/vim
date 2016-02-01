@@ -172,6 +172,7 @@ map <S-Right> :tabn<CR>
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
+map <Esc><Esc> :w<CR>
 map <F12> gg=G
 map <C-w> <C-w>w
 imap <C-k> <C-y>,
