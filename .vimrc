@@ -205,7 +205,7 @@ func! CompileRunGcc()
 		exec "!g++ % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
+		exec "!g++ % -std=c++11 -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
@@ -228,7 +228,7 @@ endfunc
 map <F8> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
-	exec "!g++ % -g -o %<"
+	exec "!g++ % -std=c++11 -g -o %<"
 	exec "!gdb ./%<"
 endfunc
 
