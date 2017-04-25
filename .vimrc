@@ -199,7 +199,7 @@ imap <F3> <ESC> :NERDTreeToggle<CR>
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "C，C++ 按F5编译运行
-map <F5> :call CompileRunGcc()<CR>
+map <F5> :call CompileRunGcc()<CR><CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
