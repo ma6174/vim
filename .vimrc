@@ -234,7 +234,7 @@ func! Rungdb()
 endfunc
 
 
-"代码格式优化化
+"代码格式优化
 
 map <F6> :call FormartSrc()<CR><CR>
 
