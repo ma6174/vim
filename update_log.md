@@ -9,7 +9,7 @@
 ### 2013年5月31日更新
 
 - 增加400多种主题，可以在[colors](colors)目录中找到
-- 可以在[这里](http://vimcolorschemetest.googlecode.com/svn/html/index-c.html)预览
+- 可以在[这里](http://vimcolors.com/)预览
 - 将`color ron`中的`ron`换成你喜欢的主题名字即可
 - 重新打开vim生效
 
